@@ -1,238 +1,345 @@
-# âš¡ AlgoVision â€” Interactive DSA Visualizer
+<div align="center">
 
-<p align="center">
-  <strong>Understand Algorithms. Visualize Every Step. Master DSA.</strong>
-</p>
+# ⚡ AlgoVision
 
-<p align="center">
-  An interactive, frontend-only learning platform designed to make Data Structures and Algorithms easier to understand through visual execution, code walkthroughs, and complexity analysis.
-</p>
+### Interactive DSA Visualizer
 
-<p align="center">
-  <img src="https://img.shields.io/badge/Frontend-HTML5-orange?style=for-the-badge&logo=html5&logoColor=white" alt="HTML5">
-  <img src="https://img.shields.io/badge/Styling-CSS3-blue?style=for-the-badge&logo=css3&logoColor=white" alt="CSS3">
-  <img src="https://img.shields.io/badge/Logic-JavaScript-yellow?style=for-the-badge&logo=javascript&logoColor=black" alt="JavaScript">
-  <img src="https://img.shields.io/badge/Backend-Not_Required-success?style=for-the-badge" alt="No backend required">
-</p>
+**Understand Algorithms. Visualize Every Step. Master DSA.**
+
+An interactive, frontend-only learning platform that makes Data Structures and Algorithms easier to understand through visual execution, code walkthroughs, and complexity analysis.
+
+<br />
+
+[![Live Demo](https://img.shields.io/badge/🚀_Live_Demo-Open_AlgoVision-6C5CE7?style=for-the-badge)](https://front-kf6gxgcah-khaleelxrahmans-projects.vercel.app)
+
+<br />
+
+![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css3&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black)
+![Vercel](https://img.shields.io/badge/Deployed_on-Vercel-000000?style=flat-square&logo=vercel&logoColor=white)
+![Backend](https://img.shields.io/badge/Backend-Not_Required-2ECC71?style=flat-square)
+![Status](https://img.shields.io/badge/Status-In_Development-F39C12?style=flat-square)
+
+</div>
 
 ---
 
-## ðŸš€ Overview
+## 📑 Table of Contents
 
-**AlgoVision** is a browser-based educational project focused on making algorithm execution visual, interactive, and intuitive.
+- [Overview](#-overview)
+- [Highlights](#-highlights)
+- [Algorithms in Scope](#-algorithms-in-scope)
+- [Architecture](#-architecture)
+- [Technology Stack](#-technology-stack)
+- [Getting Started](#-getting-started)
+- [Project Structure](#-project-structure)
+- [User Workflow](#-user-workflow)
+- [Team & Responsibilities](#-team--responsibilities)
+- [Roadmap](#-roadmap)
+- [Quality & Testing](#-quality--testing)
+- [Contributing](#-contributing)
+- [FAQ](#-faq)
+- [License](#-license)
 
-Instead of reading code without understanding how it works, learners can explore how data changes during each operation, follow the algorithm's logic, and study its computational complexity.
+---
 
-The project is designed as a lightweight frontend application built with **HTML, CSS, and vanilla JavaScript**, without requiring a backend server or database.
+## 🚀 Overview
 
-## ðŸŽ¯ Project Objectives
+**AlgoVision** is a browser-based educational platform that turns abstract algorithm logic into something you can *see*. Instead of reading code and guessing how it behaves, learners watch data change operation by operation, follow the logic alongside readable source code, and build real intuition for time and space complexity.
 
-- Make DSA concepts easier to understand through visual learning.
-- Demonstrate algorithm execution step by step.
-- Connect algorithm logic with readable source code.
-- Explain time and space complexity in an accessible way.
-- Provide a responsive interface for learners and students.
-- Keep the initial implementation simple to run and demonstrate.
+Built with **HTML, CSS, and vanilla JavaScript**, it runs entirely in the browser: no backend, no database, no build step.
 
-## âœ¨ Core Features
+### 🎯 Objectives
+
+| | Goal |
+|---|---|
+| 👁️ | Make DSA concepts easier to grasp through visual learning |
+| 🪜 | Demonstrate algorithm execution one step at a time |
+| 🔗 | Connect algorithm logic with readable source code |
+| 📈 | Explain time and space complexity in an accessible way |
+| 📱 | Deliver a responsive experience across desktop, tablet, and mobile |
+| ⚙️ | Keep the implementation simple to run, demo, and extend |
+
+---
+
+## ✨ Highlights
 
 | Feature | Description |
 |---|---|
-| Interactive Visualization | Observe how elements change during algorithm execution. |
-| Algorithm Selection | Choose an algorithm from the available collection. |
-| Custom Input | Experiment with user-defined arrays and search targets. |
-| Step-by-Step Execution | Move through algorithm operations one step at a time. |
-| Playback Controls | Play, pause, advance, and reset visualizations. |
-| Code Walkthrough | Follow the corresponding algorithm source code. |
-| Complexity Analysis | Learn about time and auxiliary-space complexity. |
-| Operation Statistics | Display relevant comparisons, swaps, or other operations where supported. |
-| Responsive Interface | Adapt the interface to desktop, tablet, and mobile screens. |
-| Client-Side Execution | Run the frontend without a dedicated backend. |
+| 🎬 **Interactive Visualization** | Watch elements move, compare, and swap during execution |
+| 🧭 **Algorithm Selection** | Pick from a curated collection of sorting and searching algorithms |
+| ✍️ **Custom Input** | Experiment with your own arrays and search targets |
+| 👣 **Step-by-Step Execution** | Advance through operations one step at a time |
+| ⏯️ **Playback Controls** | Play, pause, step forward, and reset |
+| 💻 **Code Walkthrough** | Follow the source code that matches each step |
+| 🧮 **Complexity Analysis** | Study time and auxiliary-space complexity for every algorithm |
+| 📊 **Operation Statistics** | Track comparisons, swaps, and other operations where supported |
+| 📱 **Responsive Interface** | Adapts to desktop, tablet, and mobile screens |
+| 🔒 **Client-Side Only** | No server, no sign-up, no data leaves the browser |
 
-*Feature descriptions define the intended project scope; implementation status should be updated as each feature is completed.*
-
-## ðŸ§® Algorithms in Scope
-
-### Sorting Algorithms
-
-| Algorithm | Best Time | Average Time | Worst Time |
-|---|---:|---:|---:|
-| Bubble Sort | O(n) | O(nÂ²) | O(nÂ²) |
-| Selection Sort | O(nÂ²) | O(nÂ²) | O(nÂ²) |
-| Insertion Sort | O(n) | O(nÂ²) | O(nÂ²) |
-| Merge Sort | O(n log n) | O(n log n) | O(n log n) |
-| Quick Sort | O(n log n) | O(n log n) | O(nÂ²) |
-
-### Searching Algorithms
-
-| Algorithm | Best Time | Average Time | Worst Time |
-|---|---:|---:|---:|
-| Linear Search | O(1) | O(n) | O(n) |
-| Binary Search | O(1) | O(log n) | O(log n) |
-| Jump Search | O(1) | O(âˆšn) | O(âˆšn) |
-| Interpolation Search | O(1) | O(log log n)* | O(n) |
-| Exponential Search | O(1) | O(log n) | O(log n) |
-
-\*Interpolation Search's average complexity assumes suitably distributed, sorted data. Binary, Jump, Interpolation, and Exponential Search require sorted input.
-
-## ðŸ› ï¸ Technology Stack
-
-| Technology | Purpose |
-|---|---|
-| HTML5 | Semantic page structure and content |
-| CSS3 | Layout, styling, transitions, and responsive design |
-| Vanilla JavaScript | Algorithm execution, visualization state, and controls |
-| Git & GitHub | Version control and team collaboration |
-
-**Architecture:** Browser â†’ HTML interface â†’ CSS presentation â†’ JavaScript algorithm and visualization logic.
-
-No Python runtime, API server, database, or backend service is required for this frontend-only version.
-
-## ðŸ–¥ï¸ Getting Started
-
-### Prerequisites
-
-- A modern web browser.
-- Git (optional, for cloning the repository).
-- A code editor such as Visual Studio Code.
-
-### 1. Clone the repository
-
-```bash
-git clone https://github.com/YOUR_USERNAME/AlgoVision.git
-cd AlgoVision
-```
-
-Replace `YOUR_USERNAME` with the GitHub account that owns the repository.
-
-### 2. Open the project
-
-If the entry point is `index.html`, open it directly in your browser, or use the **Live Server** extension in Visual Studio Code.
-
-No dependency installation is required for a pure HTML/CSS/JavaScript implementation unless additional libraries are introduced later.
-
-## ðŸ“ Suggested Project Structure
-
-```text
-AlgoVision/
-â”œâ”€â”€ index.html
-â”œâ”€â”€ README.md
-â”œâ”€â”€ assets/
-â”‚   â”œâ”€â”€ icons/
-â”‚   â””â”€â”€ images/
-â”œâ”€â”€ css/
-â”‚   â”œâ”€â”€ style.css
-â”‚   â”œâ”€â”€ layout.css
-â”‚   â””â”€â”€ responsive.css
-â”œâ”€â”€ js/
-â”‚   â”œâ”€â”€ app.js
-â”‚   â”œâ”€â”€ algorithms/
-â”‚   â”‚   â”œâ”€â”€ sorting.js
-â”‚   â”‚   â””â”€â”€ searching.js
-â”‚   â”œâ”€â”€ visualizer.js
-â”‚   â”œâ”€â”€ controls.js
-â”‚   â””â”€â”€ statistics.js
-â””â”€â”€ docs/
-    â””â”€â”€ screenshots/
-```
-
-This is a suggested structure. Adjust the paths to match the actual repository files.
-
-## ðŸŽ® Intended User Workflow
-
-1. Open AlgoVision in a browser.
-2. Select a sorting or searching algorithm.
-3. Enter a custom array or use sample data.
-4. Configure the visualization and start execution.
-5. Observe the current operation and data changes.
-6. Navigate through steps using the playback controls.
-7. Review the corresponding code and complexity information.
-8. Reset the visualization and experiment with a different input.
-
-## ðŸ‘¥ Team Collaboration
-
-AlgoVision is designed for collaborative development with clearly separated responsibilities.
-
-| Member | Responsibility |
-|---|---|
-| Member 1 | Frontend interface, visual design, responsive layout, and controls |
-| Member 2 | Algorithm execution, visualization steps, and operation statistics |
-| Member 3 | Python algorithm examples, code explanations, and learning content |
-
-**Architecture note:** If the team retains the Python implementations assigned to Member 3, those can serve as educational reference examples. A browser-only HTML/CSS/JavaScript application cannot execute Python directly without an additional runtime or backend; its interactive visualizer should use JavaScript implementations.
-
-### Collaboration Guidelines
-
-- Work on separate branches for individual features.
-- Use descriptive commit messages.
-- Open pull requests before merging substantial changes.
-- Test each feature before integration.
-- Coordinate shared interfaces and data formats before implementation.
-
-## ðŸ—ºï¸ Development Roadmap
-
-- [ ] Establish the responsive application layout.
-- [ ] Implement the algorithm selection interface.
-- [ ] Build sorting visualizations.
-- [ ] Build searching visualizations.
-- [ ] Add step-by-step playback controls.
-- [ ] Connect algorithm operations to code highlighting.
-- [ ] Display operation counts and complexity information.
-- [ ] Add input validation and edge-case handling.
-- [ ] Test visualizations with different input sizes.
-- [ ] Capture screenshots and publish a live demo.
-
-Update these checkboxes as the features are implemented and verified.
-
-## ðŸ§ª Testing Checklist
-
-- [ ] Empty input is handled safely.
-- [ ] Duplicate and negative values work correctly where applicable.
-- [ ] Sorting algorithms produce correctly ordered output.
-- [ ] Searching algorithms return the correct result.
-- [ ] Binary-based searching methods validate sorted input.
-- [ ] Pause, resume, reset, and step controls behave correctly.
-- [ ] Statistics remain consistent with the executed operations.
-- [ ] Layout remains usable on smaller screens.
-- [ ] Browser console has no unexpected errors.
-
-## ðŸŒ± Future Enhancements
-
-- Side-by-side algorithm comparisons.
-- Speed controls for animation playback.
-- Additional algorithms and data structures.
-- Interactive quizzes and learning challenges.
-- Accessibility improvements and keyboard navigation.
-- A published static website for sharing the project.
-
-These are possible extensions, not claims about currently implemented features.
-
-## ðŸ¤ Contributing
-
-Contributions from the project team are welcome.
-
-1. Clone the repository.
-2. Create a feature branch.
-3. Implement one clearly scoped feature.
-4. Test the changes locally.
-5. Commit and push your branch.
-6. Open a pull request for review.
-
-Keep changes focused and avoid modifying another member's work without coordination.
-
-## ðŸ“„ License
-
-A license has not yet been specified. Add a `LICENSE` file after the project owner selects the intended license.
+> **Note:** This table describes the intended project scope. Implementation status is tracked in the [Roadmap](#-roadmap).
 
 ---
 
-<p align="center">
-  <strong>AlgoVision â€” Learn the Logic. See the Execution. Understand the Algorithm.</strong>
-</p>
+## 🧮 Algorithms in Scope
 
-<p align="center">
-  Built as a collaborative learning project.
-</p>
+### Sorting
+
+| Algorithm | Best | Average | Worst | Space | Stable |
+|---|:---:|:---:|:---:|:---:|:---:|
+| **Bubble Sort** | O(n) | O(n²) | O(n²) | O(1) | ✅ |
+| **Selection Sort** | O(n²) | O(n²) | O(n²) | O(1) | ❌ |
+| **Insertion Sort** | O(n) | O(n²) | O(n²) | O(1) | ✅ |
+| **Merge Sort** | O(n log n) | O(n log n) | O(n log n) | O(n) | ✅ |
+| **Quick Sort** | O(n log n) | O(n log n) | O(n²) | O(log n)† | ❌ |
+
+### Searching
+
+| Algorithm | Best | Average | Worst | Space | Requires Sorted Input |
+|---|:---:|:---:|:---:|:---:|:---:|
+| **Linear Search** | O(1) | O(n) | O(n) | O(1) | ❌ |
+| **Binary Search** | O(1) | O(log n) | O(log n) | O(1)‡ | ✅ |
+| **Jump Search** | O(1) | O(√n) | O(√n) | O(1) | ✅ |
+| **Interpolation Search** | O(1) | O(log log n)* | O(n) | O(1) | ✅ |
+| **Exponential Search** | O(1) | O(log n) | O(log n) | O(1)‡ | ✅ |
+
+<sub>
+† Quick Sort space reflects average recursion-stack depth.<br />
+‡ Assumes an iterative implementation; a recursive version uses O(log n) stack space.<br />
+* Interpolation Search's average case assumes sorted, suitably (near-uniformly) distributed data.
+</sub>
+
+---
+
+## 🏗️ Architecture
+
+AlgoVision separates **algorithm logic** from **rendering**: each algorithm produces an ordered list of steps, and the visualizer simply plays those steps back. This keeps the UI simple and makes new algorithms easy to add.
+
+```mermaid
+flowchart LR
+    A[User Input<br/>array · target · algorithm] --> B[Algorithm Engine<br/>js/algorithms]
+    B --> C[Step Timeline<br/>compare · swap · found]
+    C --> D[Visualizer<br/>js/visualizer.js]
+    C --> E[Statistics<br/>js/statistics.js]
+    F[Playback Controls<br/>js/controls.js] --> D
+    D --> G[(Browser DOM)]
+    E --> G
+```
+
+**Design principles**
+
+- **Pure algorithm functions.** Each algorithm records steps instead of touching the DOM.
+- **Deterministic playback.** The same input always produces the same timeline, so stepping backward and resetting are reliable.
+- **Zero dependencies.** Nothing to install, nothing to break.
+
+---
+
+## 🛠️ Technology Stack
+
+| Technology | Purpose |
+|---|---|
+| **HTML5** | Semantic page structure and content |
+| **CSS3** | Layout, styling, transitions, and responsive design |
+| **Vanilla JavaScript** | Algorithm execution, visualization state, and controls |
+| **Git & GitHub** | Version control and team collaboration |
+| **Vercel** | Static hosting and continuous deployment |
+
+No Python runtime, API server, database, or backend service is required.
+
+---
+
+## 🖥️ Getting Started
+
+### Prerequisites
+
+- A modern web browser (Chrome, Edge, Firefox, or Safari)
+- [Git](https://git-scm.com/) *(optional, for cloning)*
+- A code editor such as [Visual Studio Code](https://code.visualstudio.com/)
+
+### Run Locally
+
+```bash
+# 1. Clone the repository
+git clone https://github.com/YOUR_USERNAME/AlgoVision.git
+cd AlgoVision
+
+# 2. Open index.html in your browser
+#    or serve it with any static server, for example:
+npx serve .
+```
+
+> Replace `YOUR_USERNAME` with the GitHub account that owns the repository.
+
+With VS Code, you can also right-click `index.html` and choose **Open with Live Server** for automatic reloads.
+
+No dependency installation is needed unless additional libraries are introduced later.
+
+---
+
+## 📁 Project Structure
+
+```text
+AlgoVision/
+├── index.html
+├── README.md
+├── assets/
+│   ├── icons/
+│   └── images/
+├── css/
+│   ├── style.css
+│   ├── layout.css
+│   └── responsive.css
+├── js/
+│   ├── app.js
+│   ├── algorithms/
+│   │   ├── sorting.js
+│   │   └── searching.js
+│   ├── visualizer.js
+│   ├── controls.js
+│   └── statistics.js
+└── docs/
+    └── screenshots/
+```
+
+*This is a suggested structure. Adjust the paths to match the actual repository files.*
+
+---
+
+## 🎮 User Workflow
+
+```text
+ ① Open AlgoVision  →  ② Choose an algorithm  →  ③ Enter or generate data
+          ↓
+ ④ Start execution  →  ⑤ Watch each operation  →  ⑥ Step / pause / replay
+          ↓
+ ⑦ Review code & complexity  →  ⑧ Reset and experiment again
+```
+
+---
+
+## 👥 Team & Responsibilities
+
+| Member | Role | Responsibility |
+|---|---|---|
+| **Member 1** | Frontend & Design | Interface, visual design, responsive layout, and controls |
+| **Member 2** | Algorithms & Logic | Algorithm execution, visualization steps, and operation statistics |
+| **Member 3** | Content & Learning | Python algorithm examples, code explanations, and learning content |
+
+> **Architecture note:** Member 3's Python implementations can serve as educational reference examples. A browser-only application cannot execute Python without an extra runtime or backend, so the interactive visualizer itself uses JavaScript implementations.
+
+### Collaboration Guidelines
+
+- Work on separate branches for individual features
+- Use clear, descriptive commit messages
+- Open pull requests before merging substantial changes
+- Test each feature before integration
+- Agree on shared interfaces and data formats before implementing
+
+---
+
+## 🗺️ Roadmap
+
+| Phase | Milestone | Status |
+|:---:|---|:---:|
+| 1 | Responsive application layout | ⬜ |
+| 2 | Algorithm selection interface | ⬜ |
+| 3 | Sorting visualizations | ⬜ |
+| 4 | Searching visualizations | ⬜ |
+| 5 | Step-by-step playback controls | ⬜ |
+| 6 | Code highlighting linked to operations | ⬜ |
+| 7 | Operation counts and complexity panel | ⬜ |
+| 8 | Input validation and edge-case handling | ⬜ |
+| 9 | Testing across input sizes | ⬜ |
+| 10 | Screenshots and published live demo | 🟨 Demo deployed |
+
+*Legend: ⬜ Planned · 🟨 In progress · ✅ Complete. Update as features are implemented and verified.*
+
+### 🌱 Future Enhancements
+
+- Side-by-side algorithm comparison
+- Adjustable animation speed
+- Additional algorithms and data structures (trees, graphs, heaps)
+- Interactive quizzes and learning challenges
+- Accessibility improvements and full keyboard navigation
+
+*These are possible extensions, not claims about currently implemented features.*
+
+---
+
+## 🧪 Quality & Testing
+
+**Correctness**
+
+- [ ] Sorting algorithms produce correctly ordered output
+- [ ] Searching algorithms return the correct index or "not found"
+- [ ] Binary-based searches validate sorted input
+- [ ] Statistics stay consistent with executed operations
+
+**Edge cases**
+
+- [ ] Empty input is handled safely
+- [ ] Single-element arrays work
+- [ ] Duplicate and negative values work where applicable
+
+**Interaction & UI**
+
+- [ ] Pause, resume, reset, and step controls behave correctly
+- [ ] Layout remains usable on small screens
+- [ ] Browser console shows no unexpected errors
+
+---
+
+## 🤝 Contributing
+
+Contributions from the project team are welcome.
+
+1. **Clone** the repository
+2. **Branch** from `main` with a focused name, such as `feature/merge-sort-visualizer`
+3. **Implement** one clearly scoped feature
+4. **Test** locally against the checklist above
+5. **Commit** with a descriptive message, such as `feat: add merge sort step recording`
+6. **Push** your branch and **open a pull request** for review
+
+Keep changes focused and coordinate before modifying another member's work.
+
+---
+
+## ❓ FAQ
+
+<details>
+<summary><b>Do I need to install anything to run AlgoVision?</b></summary>
+<br />
+No. Open <code>index.html</code> in a modern browser, or visit the live demo.
+</details>
+
+<details>
+<summary><b>Why do some searches require sorted input?</b></summary>
+<br />
+Binary, Jump, Interpolation, and Exponential Search rely on order to skip elements safely. On unsorted data they can return wrong results, so AlgoVision validates input for these algorithms.
+</details>
+
+<details>
+<summary><b>Can the visualizer run Python code?</b></summary>
+<br />
+Not in a browser-only app. The visualizer runs JavaScript implementations, while Python versions serve as educational reference examples.
+</details>
+
+---
+
+## 📄 License
+
+A license has not yet been specified. Add a `LICENSE` file once the project owner selects the intended license.
+
+---
+
+<div align="center">
+
+**AlgoVision — Learn the Logic. See the Execution. Understand the Algorithm.**
+
+<sub>Built as a collaborative learning project.</sub>
+
+</div>
 
 <!-- VERCEL_DEPLOYMENT_START -->
 ## Live Demo
