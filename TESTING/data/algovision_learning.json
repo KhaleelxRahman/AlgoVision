@@ -1,0 +1,2656 @@
+{
+  "schema_version": "1.0",
+  "languages": [
+    "en",
+    "hinglish"
+  ],
+  "algorithms": [
+    {
+      "id": "bubble-sort",
+      "name": "Bubble Sort",
+      "category": "sorting",
+      "function": "bubble_sort",
+      "signature": "bubble_sort(data)",
+      "preconditions": [
+        {
+          "en": "data must be a list or tuple of finite ints/floats (bool, NaN, infinity and other types are rejected with TypeError/ValueError).",
+          "hinglish": "data finite ints/floats ki list ya tuple honi chahiye (bool, NaN, infinity aur doosre types TypeError/ValueError ke saath reject hote hain)."
+        },
+        {
+          "en": "The input is never modified; a new ascending list is returned.",
+          "hinglish": "Input kabhi modify nahi hota; ek nayi ascending list return hoti hai."
+        }
+      ],
+      "output": {
+        "en": "A new list with the same values in ascending order.",
+        "hinglish": "Wahi values ascending order mein, ek nayi list ke roop mein."
+      },
+      "mutates_input": false,
+      "complexity": {
+        "time": {
+          "best": "O(n)",
+          "average": "O(n²)",
+          "worst": "O(n²)"
+        },
+        "space": {
+          "auxiliary": "O(1)"
+        },
+        "notes": {
+          "en": {
+            "time": "Best case O(n): on already sorted data one pass finds no swaps and stops. Average and worst case O(n²): about n²/2 comparisons.",
+            "space": "O(1) extra space: only a few index variables and a flag."
+          },
+          "hinglish": {
+            "time": "Best case O(n): pehle se sorted data mein ek pass mein koi swap nahi hota aur algorithm ruk jaata hai. Average aur worst case O(n²): lagbhag n²/2 comparisons.",
+            "space": "O(1) extra space: sirf kuch index variables aur ek flag."
+          }
+        }
+      },
+      "explanation": {
+        "summary": {
+          "en": "Bubble sort repeatedly compares neighbouring elements and swaps them when they are in the wrong order. After each pass the largest remaining value 'bubbles up' to its final position at the end.",
+          "hinglish": "Bubble sort baar-baar paas-paas ke elements ko compare karta hai aur galat order mein hone par swap kar deta hai. Har pass ke baad bacha hua sabse bada value bubble ki tarah upar uth kar end mein apni sahi jagah le leta hai."
+        },
+        "when_to_use": {
+          "en": [
+            "Teaching: it is the simplest sort to visualise.",
+            "Tiny or almost-sorted lists, thanks to the early-exit check."
+          ],
+          "hinglish": [
+            "Padhai ke liye: ise visualise karna sabse aasaan hai.",
+            "Chhote ya lagbhag sorted lists ke liye, kyunki early-exit check hota hai."
+          ]
+        },
+        "how_it_works": {
+          "en": [
+            "Walk through the list comparing each pair of neighbours.",
+            "Swap a pair if the left value is bigger than the right value.",
+            "After one full pass the largest unsorted value sits at the end.",
+            "Repeat on the shorter unsorted part until a pass makes no swaps."
+          ],
+          "hinglish": [
+            "List mein aage badho aur har paas-paas ki jodi ko compare karo.",
+            "Agar left value right se badi hai to dono ko swap karo.",
+            "Ek poore pass ke baad sabse bada unsorted value end mein pahunch jaata hai.",
+            "Chhote hote unsorted hisse par tab tak repeat karo jab tak ek pass mein koi swap na ho."
+          ]
+        }
+      },
+      "code": {
+        "language": "python",
+        "source": "arr = prepare_sort_input(data)\nn = len(arr)\nfor end in range(n - 1, 0, -1):\n    swapped = False\n    for j in range(end):\n        if arr[j] > arr[j + 1]:\n            arr[j], arr[j + 1] = arr[j + 1], arr[j]\n            swapped = True\n    if not swapped:\n        break\nreturn arr",
+        "line_ids": [
+          "bubble.init",
+          "bubble.length",
+          "bubble.outer_loop",
+          "bubble.reset_flag",
+          "bubble.inner_loop",
+          "bubble.compare",
+          "bubble.swap",
+          "bubble.mark_swapped",
+          "bubble.check_swapped",
+          "bubble.early_exit",
+          "bubble.return"
+        ],
+        "lines": [
+          {
+            "id": "bubble.init",
+            "line": 1,
+            "indent": 0,
+            "code": "arr = prepare_sort_input(data)",
+            "explanation": {
+              "en": "Validate the input and make a working copy so the original list is never changed.",
+              "hinglish": "Input validate karo aur ek copy banao taaki original list kabhi change na ho."
+            }
+          },
+          {
+            "id": "bubble.length",
+            "line": 2,
+            "indent": 0,
+            "code": "n = len(arr)",
+            "explanation": {
+              "en": "Remember how many elements there are.",
+              "hinglish": "Yaad rakho ki kitne elements hain."
+            }
+          },
+          {
+            "id": "bubble.outer_loop",
+            "line": 3,
+            "indent": 0,
+            "code": "for end in range(n - 1, 0, -1):",
+            "explanation": {
+              "en": "Each pass handles a shorter range: 'end' is the last index that is still unsorted.",
+              "hinglish": "Har pass mein range chhoti hoti jaati hai: 'end' woh last index hai jo abhi unsorted hai."
+            }
+          },
+          {
+            "id": "bubble.reset_flag",
+            "line": 4,
+            "indent": 1,
+            "code": "    swapped = False",
+            "explanation": {
+              "en": "Assume this pass will make no swaps.",
+              "hinglish": "Maan lo ki is pass mein koi swap nahi hoga."
+            }
+          },
+          {
+            "id": "bubble.inner_loop",
+            "line": 5,
+            "indent": 1,
+            "code": "    for j in range(end):",
+            "explanation": {
+              "en": "Visit every neighbouring pair (j, j + 1) in the unsorted range.",
+              "hinglish": "Unsorted range ki har paas-paas wali jodi (j, j + 1) ko visit karo."
+            }
+          },
+          {
+            "id": "bubble.compare",
+            "line": 6,
+            "indent": 2,
+            "code": "        if arr[j] > arr[j + 1]:",
+            "explanation": {
+              "en": "Compare the pair. Using '>' (not '>=') keeps equal values in their original order, so the sort is stable.",
+              "hinglish": "Jodi ko compare karo. '>=' ki jagah '>' use karne se barabar values ka order same rehta hai, isliye sort stable hai."
+            }
+          },
+          {
+            "id": "bubble.swap",
+            "line": 7,
+            "indent": 3,
+            "code": "            arr[j], arr[j + 1] = arr[j + 1], arr[j]",
+            "explanation": {
+              "en": "Left value is bigger, so swap the two values.",
+              "hinglish": "Left value badi hai, isliye dono values ko swap karo."
+            }
+          },
+          {
+            "id": "bubble.mark_swapped",
+            "line": 8,
+            "indent": 3,
+            "code": "            swapped = True",
+            "explanation": {
+              "en": "Record that a swap happened, so another pass is needed.",
+              "hinglish": "Note karo ki swap hua, matlab ek aur pass chahiye."
+            }
+          },
+          {
+            "id": "bubble.check_swapped",
+            "line": 9,
+            "indent": 1,
+            "code": "    if not swapped:",
+            "explanation": {
+              "en": "After the pass, check whether any swap happened.",
+              "hinglish": "Pass ke baad check karo ki koi swap hua ya nahi."
+            }
+          },
+          {
+            "id": "bubble.early_exit",
+            "line": 10,
+            "indent": 2,
+            "code": "        break",
+            "explanation": {
+              "en": "No swaps means the list is already sorted, so stop early. This gives the O(n) best case.",
+              "hinglish": "Koi swap nahi hua matlab list sorted hai, isliye jaldi ruk jao. Isi se O(n) best case milta hai."
+            }
+          },
+          {
+            "id": "bubble.return",
+            "line": 11,
+            "indent": 0,
+            "code": "return arr",
+            "explanation": {
+              "en": "Return the sorted copy.",
+              "hinglish": "Sorted copy return karo."
+            }
+          }
+        ]
+      },
+      "examples": [
+        {
+          "input": {
+            "data": [
+              5,
+              2,
+              9,
+              1,
+              5,
+              6
+            ]
+          },
+          "output": [
+            1,
+            2,
+            5,
+            5,
+            6,
+            9
+          ]
+        },
+        {
+          "input": {
+            "data": []
+          },
+          "output": []
+        }
+      ],
+      "stable": true
+    },
+    {
+      "id": "selection-sort",
+      "name": "Selection Sort",
+      "category": "sorting",
+      "function": "selection_sort",
+      "signature": "selection_sort(data)",
+      "preconditions": [
+        {
+          "en": "data must be a list or tuple of finite ints/floats (bool, NaN, infinity and other types are rejected with TypeError/ValueError).",
+          "hinglish": "data finite ints/floats ki list ya tuple honi chahiye (bool, NaN, infinity aur doosre types TypeError/ValueError ke saath reject hote hain)."
+        },
+        {
+          "en": "The input is never modified; a new ascending list is returned.",
+          "hinglish": "Input kabhi modify nahi hota; ek nayi ascending list return hoti hai."
+        }
+      ],
+      "output": {
+        "en": "A new list with the same values in ascending order.",
+        "hinglish": "Wahi values ascending order mein, ek nayi list ke roop mein."
+      },
+      "mutates_input": false,
+      "complexity": {
+        "time": {
+          "best": "O(n²)",
+          "average": "O(n²)",
+          "worst": "O(n²)"
+        },
+        "space": {
+          "auxiliary": "O(1)"
+        },
+        "notes": {
+          "en": {
+            "time": "O(n²) in every case: it always scans the whole unsorted part, even if the data is already sorted.",
+            "space": "O(1) extra space: only index variables."
+          },
+          "hinglish": {
+            "time": "Har case mein O(n²): yeh hamesha poora unsorted hissa scan karta hai, chahe data pehle se sorted ho.",
+            "space": "O(1) extra space: sirf index variables."
+          }
+        }
+      },
+      "explanation": {
+        "summary": {
+          "en": "Selection sort repeatedly finds the smallest value in the unsorted part and swaps it into the next position of the sorted part.",
+          "hinglish": "Selection sort unsorted hisse mein se sabse chhota value dhoondta hai aur use sorted hisse ki agli position par swap kar deta hai."
+        },
+        "when_to_use": {
+          "en": [
+            "When writes are expensive: it makes at most n - 1 swaps.",
+            "Teaching the idea of a growing sorted prefix."
+          ],
+          "hinglish": [
+            "Jab write karna mehenga ho: ismein zyada se zyada n - 1 swaps hote hain.",
+            "Badhte hue sorted prefix ka concept samjhane ke liye."
+          ]
+        },
+        "how_it_works": {
+          "en": [
+            "Treat the start of the list as the sorted part (initially empty).",
+            "Scan the unsorted part to find the index of its smallest value.",
+            "Swap that smallest value into the first unsorted position.",
+            "Grow the sorted part by one and repeat."
+          ],
+          "hinglish": [
+            "List ke shuru ko sorted hissa maano (pehle yeh khaali hai).",
+            "Unsorted hisse ko scan karke sabse chhote value ka index dhoondo.",
+            "Us sabse chhote value ko pehli unsorted position par swap karo.",
+            "Sorted hisse ko ek se badhao aur repeat karo."
+          ]
+        }
+      },
+      "code": {
+        "language": "python",
+        "source": "arr = prepare_sort_input(data)\nn = len(arr)\nfor i in range(n - 1):\n    min_index = i\n    for j in range(i + 1, n):\n        if arr[j] < arr[min_index]:\n            min_index = j\n    if min_index != i:\n        arr[i], arr[min_index] = arr[min_index], arr[i]\nreturn arr",
+        "line_ids": [
+          "selection.init",
+          "selection.length",
+          "selection.outer_loop",
+          "selection.assume_min",
+          "selection.inner_loop",
+          "selection.compare",
+          "selection.update_min",
+          "selection.check_swap",
+          "selection.swap",
+          "selection.return"
+        ],
+        "lines": [
+          {
+            "id": "selection.init",
+            "line": 1,
+            "indent": 0,
+            "code": "arr = prepare_sort_input(data)",
+            "explanation": {
+              "en": "Validate the input and make a working copy so the original list is never changed.",
+              "hinglish": "Input validate karo aur ek copy banao taaki original list kabhi change na ho."
+            }
+          },
+          {
+            "id": "selection.length",
+            "line": 2,
+            "indent": 0,
+            "code": "n = len(arr)",
+            "explanation": {
+              "en": "Remember how many elements there are.",
+              "hinglish": "Yaad rakho ki kitne elements hain."
+            }
+          },
+          {
+            "id": "selection.outer_loop",
+            "line": 3,
+            "indent": 0,
+            "code": "for i in range(n - 1):",
+            "explanation": {
+              "en": "Position i is the next slot of the sorted prefix. The last element is automatically correct, so stop at n - 2.",
+              "hinglish": "Position i sorted prefix ki agli jagah hai. Last element apne aap sahi ho jaata hai, isliye n - 2 par ruk jaate hain."
+            }
+          },
+          {
+            "id": "selection.assume_min",
+            "line": 4,
+            "indent": 1,
+            "code": "    min_index = i",
+            "explanation": {
+              "en": "Assume the value at i is the smallest for now.",
+              "hinglish": "Abhi ke liye maan lo ki i par jo value hai wahi sabse chhota hai."
+            }
+          },
+          {
+            "id": "selection.inner_loop",
+            "line": 5,
+            "indent": 1,
+            "code": "    for j in range(i + 1, n):",
+            "explanation": {
+              "en": "Scan the rest of the unsorted part.",
+              "hinglish": "Unsorted hisse ke baaki elements scan karo."
+            }
+          },
+          {
+            "id": "selection.compare",
+            "line": 6,
+            "indent": 2,
+            "code": "        if arr[j] < arr[min_index]:",
+            "explanation": {
+              "en": "Is this value smaller than the smallest found so far?",
+              "hinglish": "Kya yeh value ab tak ke sabse chhote value se chhota hai?"
+            }
+          },
+          {
+            "id": "selection.update_min",
+            "line": 7,
+            "indent": 3,
+            "code": "            min_index = j",
+            "explanation": {
+              "en": "Yes, remember this index as the new minimum.",
+              "hinglish": "Haan, is index ko naye minimum ki tarah yaad rakho."
+            }
+          },
+          {
+            "id": "selection.check_swap",
+            "line": 8,
+            "indent": 1,
+            "code": "    if min_index != i:",
+            "explanation": {
+              "en": "Only swap when the minimum is not already in place.",
+              "hinglish": "Swap tabhi karo jab minimum pehle se sahi jagah par na ho."
+            }
+          },
+          {
+            "id": "selection.swap",
+            "line": 9,
+            "indent": 2,
+            "code": "        arr[i], arr[min_index] = arr[min_index], arr[i]",
+            "explanation": {
+              "en": "Swap the minimum into position i. This long-distance swap is why selection sort is not stable.",
+              "hinglish": "Minimum ko position i par swap karo. Yeh door ka swap hi wajah hai ki selection sort stable nahi hai."
+            }
+          },
+          {
+            "id": "selection.return",
+            "line": 10,
+            "indent": 0,
+            "code": "return arr",
+            "explanation": {
+              "en": "Return the sorted copy.",
+              "hinglish": "Sorted copy return karo."
+            }
+          }
+        ]
+      },
+      "examples": [
+        {
+          "input": {
+            "data": [
+              29,
+              -3,
+              10,
+              10,
+              0
+            ]
+          },
+          "output": [
+            -3,
+            0,
+            10,
+            10,
+            29
+          ]
+        },
+        {
+          "input": {
+            "data": [
+              1
+            ]
+          },
+          "output": [
+            1
+          ]
+        }
+      ],
+      "stable": false
+    },
+    {
+      "id": "insertion-sort",
+      "name": "Insertion Sort",
+      "category": "sorting",
+      "function": "insertion_sort",
+      "signature": "insertion_sort(data)",
+      "preconditions": [
+        {
+          "en": "data must be a list or tuple of finite ints/floats (bool, NaN, infinity and other types are rejected with TypeError/ValueError).",
+          "hinglish": "data finite ints/floats ki list ya tuple honi chahiye (bool, NaN, infinity aur doosre types TypeError/ValueError ke saath reject hote hain)."
+        },
+        {
+          "en": "The input is never modified; a new ascending list is returned.",
+          "hinglish": "Input kabhi modify nahi hota; ek nayi ascending list return hoti hai."
+        }
+      ],
+      "output": {
+        "en": "A new list with the same values in ascending order.",
+        "hinglish": "Wahi values ascending order mein, ek nayi list ke roop mein."
+      },
+      "mutates_input": false,
+      "complexity": {
+        "time": {
+          "best": "O(n)",
+          "average": "O(n²)",
+          "worst": "O(n²)"
+        },
+        "space": {
+          "auxiliary": "O(1)"
+        },
+        "notes": {
+          "en": {
+            "time": "Best case O(n) on already sorted data (each key needs one comparison). Average and worst case O(n²): a reverse-sorted list shifts every earlier element.",
+            "space": "O(1) extra space: only the key and an index."
+          },
+          "hinglish": {
+            "time": "Best case O(n) pehle se sorted data par (har key ke liye ek hi comparison). Average aur worst case O(n²): reverse-sorted list mein har pichhla element khiskana padta hai.",
+            "space": "O(1) extra space: sirf key aur ek index."
+          }
+        }
+      },
+      "explanation": {
+        "summary": {
+          "en": "Insertion sort builds the sorted list one element at a time, like sorting playing cards in your hand: take the next card and slide it left into its correct place.",
+          "hinglish": "Insertion sort sorted list ek-ek element karke banata hai, bilkul taash ke patte hath mein sort karne ki tarah: agla patta lo aur use left mein sahi jagah tak khiskao."
+        },
+        "when_to_use": {
+          "en": [
+            "Small lists and nearly-sorted data (close to O(n)).",
+            "As the finishing step inside faster hybrid sorts."
+          ],
+          "hinglish": [
+            "Chhote lists aur lagbhag sorted data ke liye (O(n) ke kareeb).",
+            "Tez hybrid sorts ke andar aakhri step ke roop mein."
+          ]
+        },
+        "how_it_works": {
+          "en": [
+            "Treat the first element as a sorted part of size one.",
+            "Take the next element as the 'key'.",
+            "Shift every larger sorted value one slot to the right.",
+            "Drop the key into the gap and repeat for the next element."
+          ],
+          "hinglish": [
+            "Pehle element ko size ek ka sorted hissa maano.",
+            "Agle element ko 'key' ki tarah lo.",
+            "Sorted hisse ke har bade value ko ek slot daayein khiskao.",
+            "Key ko khaali jagah mein daalo aur agle element ke liye repeat karo."
+          ]
+        }
+      },
+      "code": {
+        "language": "python",
+        "source": "arr = prepare_sort_input(data)\nfor i in range(1, len(arr)):\n    key = arr[i]\n    j = i - 1\n    while j >= 0 and arr[j] > key:\n        arr[j + 1] = arr[j]\n        j -= 1\n    arr[j + 1] = key\nreturn arr",
+        "line_ids": [
+          "insertion.init",
+          "insertion.outer_loop",
+          "insertion.pick_key",
+          "insertion.start_scan",
+          "insertion.shift_condition",
+          "insertion.shift",
+          "insertion.step_back",
+          "insertion.insert",
+          "insertion.return"
+        ],
+        "lines": [
+          {
+            "id": "insertion.init",
+            "line": 1,
+            "indent": 0,
+            "code": "arr = prepare_sort_input(data)",
+            "explanation": {
+              "en": "Validate the input and make a working copy so the original list is never changed.",
+              "hinglish": "Input validate karo aur ek copy banao taaki original list kabhi change na ho."
+            }
+          },
+          {
+            "id": "insertion.outer_loop",
+            "line": 2,
+            "indent": 0,
+            "code": "for i in range(1, len(arr)):",
+            "explanation": {
+              "en": "Start from index 1; everything to the left of i is already sorted.",
+              "hinglish": "Index 1 se shuru karo; i ke left mein sab kuch pehle se sorted hai."
+            }
+          },
+          {
+            "id": "insertion.pick_key",
+            "line": 3,
+            "indent": 1,
+            "code": "    key = arr[i]",
+            "explanation": {
+              "en": "Pick the next value to insert. Saving it lets us overwrite its slot while shifting.",
+              "hinglish": "Insert karne ke liye agla value uthao. Ise save karne se shifting ke dauraan uski jagah overwrite kar sakte hain."
+            }
+          },
+          {
+            "id": "insertion.start_scan",
+            "line": 4,
+            "indent": 1,
+            "code": "    j = i - 1",
+            "explanation": {
+              "en": "Start scanning from the element just left of the key.",
+              "hinglish": "Key ke theek left wale element se scan shuru karo."
+            }
+          },
+          {
+            "id": "insertion.shift_condition",
+            "line": 5,
+            "indent": 1,
+            "code": "    while j >= 0 and arr[j] > key:",
+            "explanation": {
+              "en": "Keep going while there is a sorted value that is strictly greater than the key. Strictly greater keeps equal values in order (stable).",
+              "hinglish": "Tab tak chalo jab tak koi sorted value key se strictly bada ho. Strictly bada rakhne se barabar values ka order bana rehta hai (stable)."
+            }
+          },
+          {
+            "id": "insertion.shift",
+            "line": 6,
+            "indent": 2,
+            "code": "        arr[j + 1] = arr[j]",
+            "explanation": {
+              "en": "Move that larger value one slot to the right.",
+              "hinglish": "Us bade value ko ek slot daayein khiskao."
+            }
+          },
+          {
+            "id": "insertion.step_back",
+            "line": 7,
+            "indent": 2,
+            "code": "        j -= 1",
+            "explanation": {
+              "en": "Look one position further left.",
+              "hinglish": "Ek position aur left mein dekho."
+            }
+          },
+          {
+            "id": "insertion.insert",
+            "line": 8,
+            "indent": 1,
+            "code": "    arr[j + 1] = key",
+            "explanation": {
+              "en": "Place the key into the gap that the shifting created.",
+              "hinglish": "Shifting se bani khaali jagah mein key ko rakh do."
+            }
+          },
+          {
+            "id": "insertion.return",
+            "line": 9,
+            "indent": 0,
+            "code": "return arr",
+            "explanation": {
+              "en": "Return the sorted copy.",
+              "hinglish": "Sorted copy return karo."
+            }
+          }
+        ]
+      },
+      "examples": [
+        {
+          "input": {
+            "data": [
+              12,
+              11,
+              13,
+              5,
+              6
+            ]
+          },
+          "output": [
+            5,
+            6,
+            11,
+            12,
+            13
+          ]
+        },
+        {
+          "input": {
+            "data": [
+              1,
+              2,
+              3
+            ]
+          },
+          "output": [
+            1,
+            2,
+            3
+          ]
+        }
+      ],
+      "stable": true
+    },
+    {
+      "id": "merge-sort",
+      "name": "Merge Sort",
+      "category": "sorting",
+      "function": "merge_sort",
+      "signature": "merge_sort(data)",
+      "preconditions": [
+        {
+          "en": "data must be a list or tuple of finite ints/floats (bool, NaN, infinity and other types are rejected with TypeError/ValueError).",
+          "hinglish": "data finite ints/floats ki list ya tuple honi chahiye (bool, NaN, infinity aur doosre types TypeError/ValueError ke saath reject hote hain)."
+        },
+        {
+          "en": "The input is never modified; a new ascending list is returned.",
+          "hinglish": "Input kabhi modify nahi hota; ek nayi ascending list return hoti hai."
+        }
+      ],
+      "output": {
+        "en": "A new list with the same values in ascending order.",
+        "hinglish": "Wahi values ascending order mein, ek nayi list ke roop mein."
+      },
+      "mutates_input": false,
+      "complexity": {
+        "time": {
+          "best": "O(n log n)",
+          "average": "O(n log n)",
+          "worst": "O(n log n)"
+        },
+        "space": {
+          "auxiliary": "O(n)"
+        },
+        "notes": {
+          "en": {
+            "time": "O(n log n) in every case: log n levels of splitting, and each level merges n elements in total.",
+            "space": "O(n) auxiliary space for the merged lists, plus O(log n) for the recursion stack."
+          },
+          "hinglish": {
+            "time": "Har case mein O(n log n): log n levels par split hota hai aur har level par kul n elements merge hote hain.",
+            "space": "Merged lists ke liye O(n) auxiliary space, aur recursion stack ke liye O(log n)."
+          }
+        }
+      },
+      "explanation": {
+        "summary": {
+          "en": "Merge sort splits the list in half, sorts each half recursively, and merges the two sorted halves into one sorted list (divide and conquer).",
+          "hinglish": "Merge sort list ko beech se do hisson mein todta hai, har hisse ko recursively sort karta hai, phir do sorted hisson ko merge karke ek sorted list bana deta hai (divide and conquer)."
+        },
+        "when_to_use": {
+          "en": [
+            "When you need guaranteed O(n log n) time and a stable sort.",
+            "Large lists where predictable performance matters."
+          ],
+          "hinglish": [
+            "Jab guaranteed O(n log n) time aur stable sort chahiye.",
+            "Bade lists jahan predictable performance zaroori ho."
+          ]
+        },
+        "how_it_works": {
+          "en": [
+            "If the list has 0 or 1 elements it is already sorted.",
+            "Split the list into a left half and a right half.",
+            "Sort both halves recursively.",
+            "Merge: repeatedly take the smaller front element of the two halves."
+          ],
+          "hinglish": [
+            "Agar list mein 0 ya 1 element hai to woh pehle se sorted hai.",
+            "List ko left aur right do hisson mein baanto.",
+            "Dono hisson ko recursively sort karo.",
+            "Merge karo: dono hisson ke aage wale elements mein se chhota baar-baar lo."
+          ]
+        }
+      },
+      "code": {
+        "language": "python",
+        "source": "arr = prepare_sort_input(data)\ndef sort(items):\n    if len(items) <= 1:\n        return items\n    mid = len(items) // 2\n    left = sort(items[:mid])\n    right = sort(items[mid:])\n    merged = []\n    i = j = 0\n    while i < len(left) and j < len(right):\n        if left[i] <= right[j]:\n            merged.append(left[i])\n            i += 1\n        else:\n            merged.append(right[j])\n            j += 1\n    merged.extend(left[i:])\n    merged.extend(right[j:])\n    return merged\nreturn sort(arr)",
+        "line_ids": [
+          "merge.init",
+          "merge.def_helper",
+          "merge.base_check",
+          "merge.base_return",
+          "merge.split",
+          "merge.sort_left",
+          "merge.sort_right",
+          "merge.merged_init",
+          "merge.pointers",
+          "merge.merge_loop",
+          "merge.compare",
+          "merge.take_left",
+          "merge.advance_left",
+          "merge.else_branch",
+          "merge.take_right",
+          "merge.advance_right",
+          "merge.leftover_left",
+          "merge.leftover_right",
+          "merge.merge_return",
+          "merge.start"
+        ],
+        "lines": [
+          {
+            "id": "merge.init",
+            "line": 1,
+            "indent": 0,
+            "code": "arr = prepare_sort_input(data)",
+            "explanation": {
+              "en": "Validate the input and make a working copy so the original list is never changed.",
+              "hinglish": "Input validate karo aur ek copy banao taaki original list kabhi change na ho."
+            }
+          },
+          {
+            "id": "merge.def_helper",
+            "line": 2,
+            "indent": 0,
+            "code": "def sort(items):",
+            "explanation": {
+              "en": "Helper that sorts one (sub)list and returns a new sorted list.",
+              "hinglish": "Helper jo ek (sub)list ko sort karke nayi sorted list return karta hai."
+            }
+          },
+          {
+            "id": "merge.base_check",
+            "line": 3,
+            "indent": 1,
+            "code": "    if len(items) <= 1:",
+            "explanation": {
+              "en": "Base case: a list with 0 or 1 elements needs no sorting.",
+              "hinglish": "Base case: 0 ya 1 element wali list ko sort karne ki zaroorat nahi."
+            }
+          },
+          {
+            "id": "merge.base_return",
+            "line": 4,
+            "indent": 2,
+            "code": "        return items",
+            "explanation": {
+              "en": "Return it unchanged; this stops the recursion.",
+              "hinglish": "Use bina badle return karo; yahin recursion ruk jaata hai."
+            }
+          },
+          {
+            "id": "merge.split",
+            "line": 5,
+            "indent": 1,
+            "code": "    mid = len(items) // 2",
+            "explanation": {
+              "en": "Find the middle index to split the list.",
+              "hinglish": "List todne ke liye beech ka index nikalo."
+            }
+          },
+          {
+            "id": "merge.sort_left",
+            "line": 6,
+            "indent": 1,
+            "code": "    left = sort(items[:mid])",
+            "explanation": {
+              "en": "Recursively sort the left half.",
+              "hinglish": "Left hisse ko recursively sort karo."
+            }
+          },
+          {
+            "id": "merge.sort_right",
+            "line": 7,
+            "indent": 1,
+            "code": "    right = sort(items[mid:])",
+            "explanation": {
+              "en": "Recursively sort the right half.",
+              "hinglish": "Right hisse ko recursively sort karo."
+            }
+          },
+          {
+            "id": "merge.merged_init",
+            "line": 8,
+            "indent": 1,
+            "code": "    merged = []",
+            "explanation": {
+              "en": "Start an empty list that will hold the merged result.",
+              "hinglish": "Ek khaali list shuru karo jismein merged result aayega."
+            }
+          },
+          {
+            "id": "merge.pointers",
+            "line": 9,
+            "indent": 1,
+            "code": "    i = j = 0",
+            "explanation": {
+              "en": "i and j point at the front of the left and right halves.",
+              "hinglish": "i aur j left aur right hisse ke aage wale element ko point karte hain."
+            }
+          },
+          {
+            "id": "merge.merge_loop",
+            "line": 10,
+            "indent": 1,
+            "code": "    while i < len(left) and j < len(right):",
+            "explanation": {
+              "en": "Continue while both halves still have unmerged elements.",
+              "hinglish": "Tab tak chalo jab tak dono hisson mein unmerged elements bache hain."
+            }
+          },
+          {
+            "id": "merge.compare",
+            "line": 11,
+            "indent": 2,
+            "code": "        if left[i] <= right[j]:",
+            "explanation": {
+              "en": "Compare the two front elements. Using '<=' takes from the left on ties, which keeps the sort stable.",
+              "hinglish": "Dono aage wale elements compare karo. '<=' se tie hone par left se lete hain, isse sort stable rehta hai."
+            }
+          },
+          {
+            "id": "merge.take_left",
+            "line": 12,
+            "indent": 3,
+            "code": "            merged.append(left[i])",
+            "explanation": {
+              "en": "The left front value is smaller or equal: append it to the result.",
+              "hinglish": "Left ka aage wala value chhota ya barabar hai: use result mein jodo."
+            }
+          },
+          {
+            "id": "merge.advance_left",
+            "line": 13,
+            "indent": 3,
+            "code": "            i += 1",
+            "explanation": {
+              "en": "Move the left pointer forward.",
+              "hinglish": "Left pointer ko aage badhao."
+            }
+          },
+          {
+            "id": "merge.else_branch",
+            "line": 14,
+            "indent": 2,
+            "code": "        else:",
+            "explanation": {
+              "en": "Otherwise the right front value is smaller.",
+              "hinglish": "Warna right ka aage wala value chhota hai."
+            }
+          },
+          {
+            "id": "merge.take_right",
+            "line": 15,
+            "indent": 3,
+            "code": "            merged.append(right[j])",
+            "explanation": {
+              "en": "Append the right front value to the result.",
+              "hinglish": "Right ke aage wale value ko result mein jodo."
+            }
+          },
+          {
+            "id": "merge.advance_right",
+            "line": 16,
+            "indent": 3,
+            "code": "            j += 1",
+            "explanation": {
+              "en": "Move the right pointer forward.",
+              "hinglish": "Right pointer ko aage badhao."
+            }
+          },
+          {
+            "id": "merge.leftover_left",
+            "line": 17,
+            "indent": 1,
+            "code": "    merged.extend(left[i:])",
+            "explanation": {
+              "en": "Copy any values left over in the left half (they are already sorted and larger than everything merged).",
+              "hinglish": "Left hisse mein bache hue values copy karo (woh pehle se sorted hain aur merged sab values se bade hain)."
+            }
+          },
+          {
+            "id": "merge.leftover_right",
+            "line": 18,
+            "indent": 1,
+            "code": "    merged.extend(right[j:])",
+            "explanation": {
+              "en": "Copy any values left over in the right half.",
+              "hinglish": "Right hisse mein bache hue values copy karo."
+            }
+          },
+          {
+            "id": "merge.merge_return",
+            "line": 19,
+            "indent": 1,
+            "code": "    return merged",
+            "explanation": {
+              "en": "Return the merged sorted list for this subproblem.",
+              "hinglish": "Is subproblem ki merged sorted list return karo."
+            }
+          },
+          {
+            "id": "merge.start",
+            "line": 20,
+            "indent": 0,
+            "code": "return sort(arr)",
+            "explanation": {
+              "en": "Run the recursive sort on the whole copy and return the result.",
+              "hinglish": "Poori copy par recursive sort chalao aur result return karo."
+            }
+          }
+        ]
+      },
+      "examples": [
+        {
+          "input": {
+            "data": [
+              38,
+              27,
+              43,
+              3,
+              9,
+              82,
+              10
+            ]
+          },
+          "output": [
+            3,
+            9,
+            10,
+            27,
+            38,
+            43,
+            82
+          ]
+        },
+        {
+          "input": {
+            "data": [
+              2,
+              2,
+              1
+            ]
+          },
+          "output": [
+            1,
+            2,
+            2
+          ]
+        }
+      ],
+      "stable": true
+    },
+    {
+      "id": "quick-sort",
+      "name": "Quick Sort",
+      "category": "sorting",
+      "function": "quick_sort",
+      "signature": "quick_sort(data)",
+      "preconditions": [
+        {
+          "en": "data must be a list or tuple of finite ints/floats (bool, NaN, infinity and other types are rejected with TypeError/ValueError).",
+          "hinglish": "data finite ints/floats ki list ya tuple honi chahiye (bool, NaN, infinity aur doosre types TypeError/ValueError ke saath reject hote hain)."
+        },
+        {
+          "en": "The input is never modified; a new ascending list is returned.",
+          "hinglish": "Input kabhi modify nahi hota; ek nayi ascending list return hoti hai."
+        }
+      ],
+      "output": {
+        "en": "A new list with the same values in ascending order.",
+        "hinglish": "Wahi values ascending order mein, ek nayi list ke roop mein."
+      },
+      "mutates_input": false,
+      "complexity": {
+        "time": {
+          "best": "O(n log n)",
+          "average": "O(n log n)",
+          "worst": "O(n²)"
+        },
+        "space": {
+          "auxiliary": "O(log n)"
+        },
+        "notes": {
+          "en": {
+            "time": "Best and average case O(n log n) when pivots split the range reasonably evenly. Worst case O(n²) when pivots are repeatedly extreme (for example many equal values with Lomuto partitioning).",
+            "space": "O(log n) auxiliary space for the call stack: recursing into the smaller partition first bounds the depth by log2(n) even in the worst case."
+          },
+          "hinglish": {
+            "time": "Best aur average case O(n log n) jab pivot range ko lagbhag barabar baantein. Worst case O(n²) jab pivot baar-baar extreme ho (jaise bahut saare equal values aur Lomuto partitioning).",
+            "space": "Call stack ke liye O(log n) auxiliary space: pehle chhote partition mein recursion karne se depth worst case mein bhi log2(n) tak seemit rehti hai."
+          }
+        }
+      },
+      "explanation": {
+        "summary": {
+          "en": "Quick sort picks a pivot, rearranges the list so smaller values are left of the pivot and larger values are right of it, then sorts the two sides the same way.",
+          "hinglish": "Quick sort ek pivot chunta hai, list ko aise arrange karta hai ki chhote values pivot ke left aur bade values right mein aa jaayein, phir dono taraf ko isi tarah sort karta hai."
+        },
+        "when_to_use": {
+          "en": [
+            "General-purpose in-memory sorting where average speed matters.",
+            "When extra memory is limited (it sorts in place on its working copy)."
+          ],
+          "hinglish": [
+            "General-purpose in-memory sorting jahan average speed zaroori ho.",
+            "Jab extra memory kam ho (yeh apni working copy mein hi sort karta hai)."
+          ]
+        },
+        "how_it_works": {
+          "en": [
+            "Choose the middle element as the pivot and move it to the end of the range.",
+            "Scan the range, moving values smaller than the pivot to the front.",
+            "Place the pivot right after those smaller values: it is now in its final position.",
+            "Recurse on the smaller side and loop on the larger side to keep the stack shallow."
+          ],
+          "hinglish": [
+            "Beech ke element ko pivot chuno aur use range ke end mein le jao.",
+            "Range scan karo aur pivot se chhote values ko aage ki taraf bhejo.",
+            "Pivot ko un chhote values ke theek baad rakho: ab woh apni final position par hai.",
+            "Chhote hisse par recursion karo aur bade hisse par loop chalao taaki stack gehra na ho."
+          ]
+        }
+      },
+      "code": {
+        "language": "python",
+        "source": "arr = prepare_sort_input(data)\ndef sort_range(low, high):\n    while low < high:\n        mid = (low + high) // 2\n        arr[mid], arr[high] = arr[high], arr[mid]\n        pivot = arr[high]\n        boundary = low\n        for j in range(low, high):\n            if arr[j] < pivot:\n                arr[boundary], arr[j] = arr[j], arr[boundary]\n                boundary += 1\n        arr[boundary], arr[high] = arr[high], arr[boundary]\n        if boundary - low < high - boundary:\n            sort_range(low, boundary - 1)\n            low = boundary + 1\n        else:\n            sort_range(boundary + 1, high)\n            high = boundary - 1\nsort_range(0, len(arr) - 1)\nreturn arr",
+        "line_ids": [
+          "quick.init",
+          "quick.def_helper",
+          "quick.loop",
+          "quick.choose_pivot",
+          "quick.move_pivot",
+          "quick.pivot_value",
+          "quick.boundary",
+          "quick.scan",
+          "quick.compare",
+          "quick.swap_small",
+          "quick.advance_boundary",
+          "quick.place_pivot",
+          "quick.pick_smaller",
+          "quick.recurse_left",
+          "quick.continue_right",
+          "quick.else_branch",
+          "quick.recurse_right",
+          "quick.continue_left",
+          "quick.start",
+          "quick.return"
+        ],
+        "lines": [
+          {
+            "id": "quick.init",
+            "line": 1,
+            "indent": 0,
+            "code": "arr = prepare_sort_input(data)",
+            "explanation": {
+              "en": "Validate the input and make a working copy so the original list is never changed.",
+              "hinglish": "Input validate karo aur ek copy banao taaki original list kabhi change na ho."
+            }
+          },
+          {
+            "id": "quick.def_helper",
+            "line": 2,
+            "indent": 0,
+            "code": "def sort_range(low, high):",
+            "explanation": {
+              "en": "Helper that sorts arr[low..high] in place.",
+              "hinglish": "Helper jo arr[low..high] ko wahin (in place) sort karta hai."
+            }
+          },
+          {
+            "id": "quick.loop",
+            "line": 3,
+            "indent": 1,
+            "code": "    while low < high:",
+            "explanation": {
+              "en": "Keep working while the range has at least two elements.",
+              "hinglish": "Tab tak kaam karo jab tak range mein kam se kam do elements hain."
+            }
+          },
+          {
+            "id": "quick.choose_pivot",
+            "line": 4,
+            "indent": 2,
+            "code": "        mid = (low + high) // 2",
+            "explanation": {
+              "en": "Pick the middle index as the pivot. This avoids the classic slow case of already sorted input.",
+              "hinglish": "Beech ke index ko pivot chuno. Isse pehle se sorted input wala classic slow case bachta hai."
+            }
+          },
+          {
+            "id": "quick.move_pivot",
+            "line": 5,
+            "indent": 2,
+            "code": "        arr[mid], arr[high] = arr[high], arr[mid]",
+            "explanation": {
+              "en": "Swap the pivot to the end of the range so the scan can ignore it.",
+              "hinglish": "Pivot ko range ke end mein swap kar do taaki scan use ignore kar sake."
+            }
+          },
+          {
+            "id": "quick.pivot_value",
+            "line": 6,
+            "indent": 2,
+            "code": "        pivot = arr[high]",
+            "explanation": {
+              "en": "Remember the pivot value.",
+              "hinglish": "Pivot ka value yaad rakho."
+            }
+          },
+          {
+            "id": "quick.boundary",
+            "line": 7,
+            "indent": 2,
+            "code": "        boundary = low",
+            "explanation": {
+              "en": "boundary marks where the 'smaller than pivot' region ends.",
+              "hinglish": "boundary batata hai ki 'pivot se chhote' wala region kahan khatam hota hai."
+            }
+          },
+          {
+            "id": "quick.scan",
+            "line": 8,
+            "indent": 2,
+            "code": "        for j in range(low, high):",
+            "explanation": {
+              "en": "Scan every element except the pivot.",
+              "hinglish": "Pivot ko chhodkar har element scan karo."
+            }
+          },
+          {
+            "id": "quick.compare",
+            "line": 9,
+            "indent": 3,
+            "code": "            if arr[j] < pivot:",
+            "explanation": {
+              "en": "Is this value smaller than the pivot?",
+              "hinglish": "Kya yeh value pivot se chhota hai?"
+            }
+          },
+          {
+            "id": "quick.swap_small",
+            "line": 10,
+            "indent": 4,
+            "code": "                arr[boundary], arr[j] = arr[j], arr[boundary]",
+            "explanation": {
+              "en": "Move it into the smaller-than-pivot region.",
+              "hinglish": "Use pivot se chhote region mein le jao."
+            }
+          },
+          {
+            "id": "quick.advance_boundary",
+            "line": 11,
+            "indent": 4,
+            "code": "                boundary += 1",
+            "explanation": {
+              "en": "Grow that region by one.",
+              "hinglish": "Us region ko ek se badhao."
+            }
+          },
+          {
+            "id": "quick.place_pivot",
+            "line": 12,
+            "indent": 2,
+            "code": "        arr[boundary], arr[high] = arr[high], arr[boundary]",
+            "explanation": {
+              "en": "Put the pivot just after the smaller values. It is now in its final sorted position.",
+              "hinglish": "Pivot ko chhote values ke theek baad rakho. Ab woh apni final sorted position par hai."
+            }
+          },
+          {
+            "id": "quick.pick_smaller",
+            "line": 13,
+            "indent": 2,
+            "code": "        if boundary - low < high - boundary:",
+            "explanation": {
+              "en": "Find which side of the pivot is smaller.",
+              "hinglish": "Dekho pivot ki kaun si taraf chhoti hai."
+            }
+          },
+          {
+            "id": "quick.recurse_left",
+            "line": 14,
+            "indent": 3,
+            "code": "            sort_range(low, boundary - 1)",
+            "explanation": {
+              "en": "Left side is smaller: sort it recursively.",
+              "hinglish": "Left taraf chhoti hai: use recursively sort karo."
+            }
+          },
+          {
+            "id": "quick.continue_right",
+            "line": 15,
+            "indent": 3,
+            "code": "            low = boundary + 1",
+            "explanation": {
+              "en": "Then continue the loop on the right side (no extra recursion).",
+              "hinglish": "Phir right taraf par loop jaari rakho (extra recursion nahi)."
+            }
+          },
+          {
+            "id": "quick.else_branch",
+            "line": 16,
+            "indent": 2,
+            "code": "        else:",
+            "explanation": {
+              "en": "Otherwise the right side is the smaller one.",
+              "hinglish": "Warna right taraf chhoti hai."
+            }
+          },
+          {
+            "id": "quick.recurse_right",
+            "line": 17,
+            "indent": 3,
+            "code": "            sort_range(boundary + 1, high)",
+            "explanation": {
+              "en": "Sort the right side recursively.",
+              "hinglish": "Right taraf ko recursively sort karo."
+            }
+          },
+          {
+            "id": "quick.continue_left",
+            "line": 18,
+            "indent": 3,
+            "code": "            high = boundary - 1",
+            "explanation": {
+              "en": "Then continue the loop on the left side.",
+              "hinglish": "Phir left taraf par loop jaari rakho."
+            }
+          },
+          {
+            "id": "quick.start",
+            "line": 19,
+            "indent": 0,
+            "code": "sort_range(0, len(arr) - 1)",
+            "explanation": {
+              "en": "Sort the whole copy, from the first index to the last.",
+              "hinglish": "Poori copy ko pehle index se aakhri index tak sort karo."
+            }
+          },
+          {
+            "id": "quick.return",
+            "line": 20,
+            "indent": 0,
+            "code": "return arr",
+            "explanation": {
+              "en": "Return the sorted copy.",
+              "hinglish": "Sorted copy return karo."
+            }
+          }
+        ]
+      },
+      "examples": [
+        {
+          "input": {
+            "data": [
+              10,
+              7,
+              8,
+              9,
+              1,
+              5
+            ]
+          },
+          "output": [
+            1,
+            5,
+            7,
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "input": {
+            "data": [
+              3,
+              3,
+              3
+            ]
+          },
+          "output": [
+            3,
+            3,
+            3
+          ]
+        }
+      ],
+      "stable": false
+    },
+    {
+      "id": "linear-search",
+      "name": "Linear Search",
+      "category": "searching",
+      "function": "linear_search",
+      "signature": "linear_search(data, target)",
+      "preconditions": [
+        {
+          "en": "data must be a list or tuple of finite ints/floats (bool, NaN, infinity and other types are rejected with TypeError/ValueError).",
+          "hinglish": "data finite ints/floats ki list ya tuple honi chahiye (bool, NaN, infinity aur doosre types TypeError/ValueError ke saath reject hote hain)."
+        },
+        {
+          "en": "target must be a finite int or float. data may be in any order.",
+          "hinglish": "target finite int ya float hona chahiye. data kisi bhi order mein ho sakta hai."
+        }
+      ],
+      "output": {
+        "en": "The index of a matching element, or -1 if the target is not present.",
+        "hinglish": "Matching element ka index, ya -1 agar target maujood nahi hai."
+      },
+      "mutates_input": false,
+      "complexity": {
+        "time": {
+          "best": "O(1)",
+          "average": "O(n)",
+          "worst": "O(n)"
+        },
+        "space": {
+          "auxiliary": "O(1)"
+        },
+        "notes": {
+          "en": {
+            "time": "Best case O(1): the target is the first element. Average and worst case O(n): the target is somewhere in the middle, last, or missing.",
+            "space": "O(1) extra space."
+          },
+          "hinglish": {
+            "time": "Best case O(1): target pehla element hai. Average aur worst case O(n): target beech mein, aakhir mein, ya list mein hai hi nahi.",
+            "space": "O(1) extra space."
+          }
+        }
+      },
+      "explanation": {
+        "summary": {
+          "en": "Linear search checks the elements one by one from the start until it finds the target or reaches the end. It works on unsorted data.",
+          "hinglish": "Linear search shuru se ek-ek element check karta hai jab tak target mil na jaaye ya list khatam na ho jaaye. Yeh unsorted data par bhi kaam karta hai."
+        },
+        "when_to_use": {
+          "en": [
+            "Unsorted data, where no faster general method exists.",
+            "Very small lists, or when you search only once."
+          ],
+          "hinglish": [
+            "Unsorted data ke liye, jahan koi aur tez general method nahi hai.",
+            "Bahut chhote lists ke liye, ya jab sirf ek baar search karna ho."
+          ]
+        },
+        "how_it_works": {
+          "en": [
+            "Start at index 0.",
+            "Compare the current element with the target.",
+            "If they match, return the index immediately.",
+            "If the end is reached without a match, return -1."
+          ],
+          "hinglish": [
+            "Index 0 se shuru karo.",
+            "Maujooda element ko target se compare karo.",
+            "Agar match ho jaaye to turant index return karo.",
+            "Agar match ke bina list khatam ho jaaye to -1 return karo."
+          ]
+        }
+      },
+      "code": {
+        "language": "python",
+        "source": "arr = prepare_search_input(data, target)\nfor i in range(len(arr)):\n    if arr[i] == target:\n        return i\nreturn -1",
+        "line_ids": [
+          "linear.init",
+          "linear.loop",
+          "linear.compare",
+          "linear.found",
+          "linear.not_found"
+        ],
+        "lines": [
+          {
+            "id": "linear.init",
+            "line": 1,
+            "indent": 0,
+            "code": "arr = prepare_search_input(data, target)",
+            "explanation": {
+              "en": "Validate the list and the target. No sorting is required.",
+              "hinglish": "List aur target validate karo. Sorting ki zaroorat nahi hai."
+            }
+          },
+          {
+            "id": "linear.loop",
+            "line": 2,
+            "indent": 0,
+            "code": "for i in range(len(arr)):",
+            "explanation": {
+              "en": "Visit each index from left to right.",
+              "hinglish": "Left se right har index ko visit karo."
+            }
+          },
+          {
+            "id": "linear.compare",
+            "line": 3,
+            "indent": 1,
+            "code": "    if arr[i] == target:",
+            "explanation": {
+              "en": "Does this element equal the target?",
+              "hinglish": "Kya yeh element target ke barabar hai?"
+            }
+          },
+          {
+            "id": "linear.found",
+            "line": 4,
+            "indent": 2,
+            "code": "        return i",
+            "explanation": {
+              "en": "Match found: return its index. With duplicates this is the first occurrence.",
+              "hinglish": "Match mil gaya: uska index return karo. Duplicates hone par yeh pehli occurrence hoti hai."
+            }
+          },
+          {
+            "id": "linear.not_found",
+            "line": 5,
+            "indent": 0,
+            "code": "return -1",
+            "explanation": {
+              "en": "Every element was checked and none matched: return -1.",
+              "hinglish": "Har element check ho gaya aur koi match nahi mila: -1 return karo."
+            }
+          }
+        ]
+      },
+      "examples": [
+        {
+          "input": {
+            "data": [
+              7,
+              3,
+              9,
+              3,
+              1
+            ],
+            "target": 3
+          },
+          "output": 1
+        },
+        {
+          "input": {
+            "data": [
+              7,
+              3,
+              9,
+              3,
+              1
+            ],
+            "target": 4
+          },
+          "output": -1
+        }
+      ],
+      "requires_sorted_input": false
+    },
+    {
+      "id": "binary-search",
+      "name": "Binary Search",
+      "category": "searching",
+      "function": "binary_search",
+      "signature": "binary_search(data, target, validate_sorted=True)",
+      "preconditions": [
+        {
+          "en": "data must be a list or tuple of finite ints/floats (bool, NaN, infinity and other types are rejected with TypeError/ValueError).",
+          "hinglish": "data finite ints/floats ki list ya tuple honi chahiye (bool, NaN, infinity aur doosre types TypeError/ValueError ke saath reject hote hain)."
+        },
+        {
+          "en": "target must be a finite int or float.",
+          "hinglish": "target finite int ya float hona chahiye."
+        },
+        {
+          "en": "data must be sorted in ascending (non-decreasing) order. Otherwise UnsortedInputError (a ValueError) is raised, unless validate_sorted=False is passed, in which case the result on unsorted data is unspecified.",
+          "hinglish": "data ascending (non-decreasing) order mein sorted hona chahiye. Warna UnsortedInputError (ek ValueError) aata hai, jab tak validate_sorted=False na diya ho; us case mein unsorted data par result unspecified hai."
+        }
+      ],
+      "output": {
+        "en": "The index of a matching element, or -1 if the target is not present.",
+        "hinglish": "Matching element ka index, ya -1 agar target maujood nahi hai."
+      },
+      "mutates_input": false,
+      "complexity": {
+        "time": {
+          "best": "O(1)",
+          "average": "O(log n)",
+          "worst": "O(log n)"
+        },
+        "space": {
+          "auxiliary": "O(1)"
+        },
+        "notes": {
+          "en": {
+            "time": "Best case O(1): the first middle element matches. Average and worst case O(log n): the range halves every step. Requires sorted input; the optional validation pass is O(n).",
+            "space": "O(1) extra space: this version is iterative."
+          },
+          "hinglish": {
+            "time": "Best case O(1): pehla middle element hi match ho jaaye. Average aur worst case O(log n): har step mein range aadhi ho jaati hai. Sorted input zaroori hai; optional validation pass O(n) ka hai.",
+            "space": "O(1) extra space: yeh version iterative hai."
+          }
+        }
+      },
+      "explanation": {
+        "summary": {
+          "en": "Binary search needs sorted data. It looks at the middle element and discards half of the remaining range each step.",
+          "hinglish": "Binary search ko sorted data chahiye. Yeh beech ka element dekhta hai aur har step mein bachi hui range ka aadha hissa hata deta hai."
+        },
+        "when_to_use": {
+          "en": [
+            "Large sorted lists that are searched many times.",
+            "Whenever random access by index is cheap."
+          ],
+          "hinglish": [
+            "Bade sorted lists jinhe baar-baar search karna ho.",
+            "Jab index se random access sasta ho."
+          ]
+        },
+        "how_it_works": {
+          "en": [
+            "Keep a range [low, high] that could contain the target.",
+            "Look at the middle element.",
+            "If it equals the target, return its index.",
+            "If it is smaller than the target, search the right half; otherwise the left half.",
+            "If the range becomes empty, return -1."
+          ],
+          "hinglish": [
+            "Ek range [low, high] rakho jismein target ho sakta hai.",
+            "Beech ka element dekho.",
+            "Agar woh target ke barabar hai to uska index return karo.",
+            "Agar woh target se chhota hai to right half mein dhoondo, warna left half mein.",
+            "Agar range khaali ho jaaye to -1 return karo."
+          ]
+        }
+      },
+      "code": {
+        "language": "python",
+        "source": "arr = prepare_sorted_search_input(data, target, validate_sorted)\nlow = 0\nhigh = len(arr) - 1\nwhile low <= high:\n    mid = (low + high) // 2\n    if arr[mid] == target:\n        return mid\n    if arr[mid] < target:\n        low = mid + 1\n    else:\n        high = mid - 1\nreturn -1",
+        "line_ids": [
+          "binary.init",
+          "binary.set_low",
+          "binary.set_high",
+          "binary.loop",
+          "binary.mid",
+          "binary.compare_equal",
+          "binary.found",
+          "binary.compare_less",
+          "binary.go_right",
+          "binary.else_branch",
+          "binary.go_left",
+          "binary.not_found"
+        ],
+        "lines": [
+          {
+            "id": "binary.init",
+            "line": 1,
+            "indent": 0,
+            "code": "arr = prepare_sorted_search_input(data, target, validate_sorted)",
+            "explanation": {
+              "en": "Validate the input. The sorted-order check is one O(n) pass that runs before the search itself; pass validate_sorted=False to skip it.",
+              "hinglish": "Input validate karo. Sorted-order check ek O(n) pass hai jo search se pehle chalta hai; ise skip karne ke liye validate_sorted=False do."
+            }
+          },
+          {
+            "id": "binary.set_low",
+            "line": 2,
+            "indent": 0,
+            "code": "low = 0",
+            "explanation": {
+              "en": "low is the first index of the range still to search.",
+              "hinglish": "low us range ka pehla index hai jise abhi search karna hai."
+            }
+          },
+          {
+            "id": "binary.set_high",
+            "line": 3,
+            "indent": 0,
+            "code": "high = len(arr) - 1",
+            "explanation": {
+              "en": "high is the last index of the range. For an empty list this is -1.",
+              "hinglish": "high us range ka aakhri index hai. Khaali list ke liye yeh -1 hota hai."
+            }
+          },
+          {
+            "id": "binary.loop",
+            "line": 4,
+            "indent": 0,
+            "code": "while low <= high:",
+            "explanation": {
+              "en": "Repeat while the range [low, high] is not empty.",
+              "hinglish": "Jab tak range [low, high] khaali nahi hai, repeat karo."
+            }
+          },
+          {
+            "id": "binary.mid",
+            "line": 5,
+            "indent": 1,
+            "code": "    mid = (low + high) // 2",
+            "explanation": {
+              "en": "Pick the middle index of the range.",
+              "hinglish": "Range ka beech wala index chuno."
+            }
+          },
+          {
+            "id": "binary.compare_equal",
+            "line": 6,
+            "indent": 1,
+            "code": "    if arr[mid] == target:",
+            "explanation": {
+              "en": "Is the middle element the target?",
+              "hinglish": "Kya beech ka element hi target hai?"
+            }
+          },
+          {
+            "id": "binary.found",
+            "line": 7,
+            "indent": 2,
+            "code": "        return mid",
+            "explanation": {
+              "en": "Found it: return the index (with duplicates, any matching index may be returned).",
+              "hinglish": "Mil gaya: index return karo (duplicates mein koi bhi matching index return ho sakta hai)."
+            }
+          },
+          {
+            "id": "binary.compare_less",
+            "line": 8,
+            "indent": 1,
+            "code": "    if arr[mid] < target:",
+            "explanation": {
+              "en": "Is the middle element smaller than the target?",
+              "hinglish": "Kya beech ka element target se chhota hai?"
+            }
+          },
+          {
+            "id": "binary.go_right",
+            "line": 9,
+            "indent": 2,
+            "code": "        low = mid + 1",
+            "explanation": {
+              "en": "Yes: the target can only be to the right, so discard the left half including mid.",
+              "hinglish": "Haan: target sirf right mein ho sakta hai, isliye mid samet left half hata do."
+            }
+          },
+          {
+            "id": "binary.else_branch",
+            "line": 10,
+            "indent": 1,
+            "code": "    else:",
+            "explanation": {
+              "en": "Otherwise the middle element is larger than the target.",
+              "hinglish": "Warna beech ka element target se bada hai."
+            }
+          },
+          {
+            "id": "binary.go_left",
+            "line": 11,
+            "indent": 2,
+            "code": "        high = mid - 1",
+            "explanation": {
+              "en": "The target can only be to the left, so discard the right half including mid.",
+              "hinglish": "Target sirf left mein ho sakta hai, isliye mid samet right half hata do."
+            }
+          },
+          {
+            "id": "binary.not_found",
+            "line": 12,
+            "indent": 0,
+            "code": "return -1",
+            "explanation": {
+              "en": "The range is empty and nothing matched: return -1.",
+              "hinglish": "Range khaali ho gayi aur kuch match nahi hua: -1 return karo."
+            }
+          }
+        ]
+      },
+      "examples": [
+        {
+          "input": {
+            "data": [
+              2,
+              5,
+              8,
+              12,
+              16,
+              23,
+              38,
+              56,
+              72,
+              91
+            ],
+            "target": 23
+          },
+          "output": 5
+        },
+        {
+          "input": {
+            "data": [
+              2,
+              5,
+              8,
+              12,
+              16,
+              23,
+              38,
+              56,
+              72,
+              91
+            ],
+            "target": 7
+          },
+          "output": -1
+        }
+      ],
+      "requires_sorted_input": true
+    },
+    {
+      "id": "jump-search",
+      "name": "Jump Search",
+      "category": "searching",
+      "function": "jump_search",
+      "signature": "jump_search(data, target, validate_sorted=True)",
+      "preconditions": [
+        {
+          "en": "data must be a list or tuple of finite ints/floats (bool, NaN, infinity and other types are rejected with TypeError/ValueError).",
+          "hinglish": "data finite ints/floats ki list ya tuple honi chahiye (bool, NaN, infinity aur doosre types TypeError/ValueError ke saath reject hote hain)."
+        },
+        {
+          "en": "target must be a finite int or float.",
+          "hinglish": "target finite int ya float hona chahiye."
+        },
+        {
+          "en": "data must be sorted in ascending (non-decreasing) order. Otherwise UnsortedInputError (a ValueError) is raised, unless validate_sorted=False is passed, in which case the result on unsorted data is unspecified.",
+          "hinglish": "data ascending (non-decreasing) order mein sorted hona chahiye. Warna UnsortedInputError (ek ValueError) aata hai, jab tak validate_sorted=False na diya ho; us case mein unsorted data par result unspecified hai."
+        }
+      ],
+      "output": {
+        "en": "The index of a matching element, or -1 if the target is not present.",
+        "hinglish": "Matching element ka index, ya -1 agar target maujood nahi hai."
+      },
+      "mutates_input": false,
+      "complexity": {
+        "time": {
+          "best": "O(1)",
+          "average": "O(√n)",
+          "worst": "O(√n)"
+        },
+        "space": {
+          "auxiliary": "O(1)"
+        },
+        "notes": {
+          "en": {
+            "time": "Best case O(1): the target is the first element of the first block. Average and worst case O(sqrt(n)): about sqrt(n) jumps plus up to sqrt(n) steps in one block. Requires sorted input.",
+            "space": "O(1) extra space."
+          },
+          "hinglish": {
+            "time": "Best case O(1): target pehle block ka pehla element hai. Average aur worst case O(sqrt(n)): lagbhag sqrt(n) jumps aur ek block mein zyada se zyada sqrt(n) steps. Sorted input zaroori hai.",
+            "space": "O(1) extra space."
+          }
+        }
+      },
+      "explanation": {
+        "summary": {
+          "en": "Jump search needs sorted data. It jumps ahead in blocks of about sqrt(n) elements to find the block that could hold the target, then scans that block linearly.",
+          "hinglish": "Jump search ko sorted data chahiye. Yeh lagbhag sqrt(n) elements ke blocks mein aage koodta hai taaki woh block mile jismein target ho sakta hai, phir us block ko linearly scan karta hai."
+        },
+        "when_to_use": {
+          "en": [
+            "Sorted data where jumping forward is cheap but stepping backwards a long way is costly.",
+            "As a simple middle ground between linear and binary search."
+          ],
+          "hinglish": [
+            "Sorted data jahan aage koodna sasta ho par bahut peeche jaana mehenga ho.",
+            "Linear aur binary search ke beech ke simple vikalp ke roop mein."
+          ]
+        },
+        "how_it_works": {
+          "en": [
+            "Choose a block size of about sqrt(n).",
+            "Jump block by block while the last element of the block is smaller than the target.",
+            "Now the target can only be inside the current block.",
+            "Scan that block linearly; return the index or -1."
+          ],
+          "hinglish": [
+            "Lagbhag sqrt(n) ka block size chuno.",
+            "Jab tak block ka aakhri element target se chhota hai, block-block aage koodo.",
+            "Ab target sirf maujooda block ke andar ho sakta hai.",
+            "Us block ko linearly scan karo; index ya -1 return karo."
+          ]
+        }
+      },
+      "code": {
+        "language": "python",
+        "source": "arr = prepare_sorted_search_input(data, target, validate_sorted)\nn = len(arr)\nstep = math.isqrt(n)\nprev = 0\ncurr = step\nwhile prev < n and arr[min(curr, n) - 1] < target:\n    prev = curr\n    curr += step\nfor i in range(prev, min(curr, n)):\n    if arr[i] == target:\n        return i\nreturn -1",
+        "line_ids": [
+          "jump.init",
+          "jump.length",
+          "jump.block_size",
+          "jump.prev",
+          "jump.curr",
+          "jump.jump_loop",
+          "jump.advance_prev",
+          "jump.advance_curr",
+          "jump.scan",
+          "jump.compare",
+          "jump.found",
+          "jump.not_found"
+        ],
+        "lines": [
+          {
+            "id": "jump.init",
+            "line": 1,
+            "indent": 0,
+            "code": "arr = prepare_sorted_search_input(data, target, validate_sorted)",
+            "explanation": {
+              "en": "Validate the input. The sorted-order check is one O(n) pass that runs before the search itself; pass validate_sorted=False to skip it.",
+              "hinglish": "Input validate karo. Sorted-order check ek O(n) pass hai jo search se pehle chalta hai; ise skip karne ke liye validate_sorted=False do."
+            }
+          },
+          {
+            "id": "jump.length",
+            "line": 2,
+            "indent": 0,
+            "code": "n = len(arr)",
+            "explanation": {
+              "en": "Remember how many elements there are.",
+              "hinglish": "Yaad rakho ki kitne elements hain."
+            }
+          },
+          {
+            "id": "jump.block_size",
+            "line": 3,
+            "indent": 0,
+            "code": "step = math.isqrt(n)",
+            "explanation": {
+              "en": "Block size is the integer square root of n, which balances the number of jumps against the scan length.",
+              "hinglish": "Block size n ka integer square root hai, jisse jumps aur scan ki lambai ka santulan bana rehta hai."
+            }
+          },
+          {
+            "id": "jump.prev",
+            "line": 4,
+            "indent": 0,
+            "code": "prev = 0",
+            "explanation": {
+              "en": "prev is where the current block starts.",
+              "hinglish": "prev woh jagah hai jahan maujooda block shuru hota hai."
+            }
+          },
+          {
+            "id": "jump.curr",
+            "line": 5,
+            "indent": 0,
+            "code": "curr = step",
+            "explanation": {
+              "en": "curr is where the next block starts (one past the end of the current block).",
+              "hinglish": "curr woh jagah hai jahan agla block shuru hota hai (maujooda block ke end ke ek aage)."
+            }
+          },
+          {
+            "id": "jump.jump_loop",
+            "line": 6,
+            "indent": 0,
+            "code": "while prev < n and arr[min(curr, n) - 1] < target:",
+            "explanation": {
+              "en": "If the last element of the current block is still smaller than the target, the target is not in this block.",
+              "hinglish": "Agar maujooda block ka aakhri element abhi bhi target se chhota hai, to target is block mein nahi hai."
+            }
+          },
+          {
+            "id": "jump.advance_prev",
+            "line": 7,
+            "indent": 1,
+            "code": "    prev = curr",
+            "explanation": {
+              "en": "Move the block start to the next block.",
+              "hinglish": "Block ka start agle block par le jao."
+            }
+          },
+          {
+            "id": "jump.advance_curr",
+            "line": 8,
+            "indent": 1,
+            "code": "    curr += step",
+            "explanation": {
+              "en": "Move the block end forward by one block size.",
+              "hinglish": "Block ka end ek block size aage badhao."
+            }
+          },
+          {
+            "id": "jump.scan",
+            "line": 9,
+            "indent": 0,
+            "code": "for i in range(prev, min(curr, n)):",
+            "explanation": {
+              "en": "Scan the candidate block linearly (the last block may be shorter).",
+              "hinglish": "Candidate block ko linearly scan karo (aakhri block chhota ho sakta hai)."
+            }
+          },
+          {
+            "id": "jump.compare",
+            "line": 10,
+            "indent": 1,
+            "code": "    if arr[i] == target:",
+            "explanation": {
+              "en": "Does this element equal the target?",
+              "hinglish": "Kya yeh element target ke barabar hai?"
+            }
+          },
+          {
+            "id": "jump.found",
+            "line": 11,
+            "indent": 2,
+            "code": "        return i",
+            "explanation": {
+              "en": "Found it: return the index.",
+              "hinglish": "Mil gaya: index return karo."
+            }
+          },
+          {
+            "id": "jump.not_found",
+            "line": 12,
+            "indent": 0,
+            "code": "return -1",
+            "explanation": {
+              "en": "The candidate block did not contain the target (or we jumped past the end): return -1.",
+              "hinglish": "Candidate block mein target nahi mila (ya hum end ke aage nikal gaye): -1 return karo."
+            }
+          }
+        ]
+      },
+      "examples": [
+        {
+          "input": {
+            "data": [
+              0,
+              1,
+              1,
+              2,
+              3,
+              5,
+              8,
+              13,
+              21,
+              34,
+              55,
+              89
+            ],
+            "target": 55
+          },
+          "output": 10
+        },
+        {
+          "input": {
+            "data": [
+              0,
+              1,
+              1,
+              2,
+              3,
+              5,
+              8,
+              13,
+              21,
+              34,
+              55,
+              89
+            ],
+            "target": 4
+          },
+          "output": -1
+        }
+      ],
+      "requires_sorted_input": true
+    },
+    {
+      "id": "interpolation-search",
+      "name": "Interpolation Search",
+      "category": "searching",
+      "function": "interpolation_search",
+      "signature": "interpolation_search(data, target, validate_sorted=True)",
+      "preconditions": [
+        {
+          "en": "data must be a list or tuple of finite ints/floats (bool, NaN, infinity and other types are rejected with TypeError/ValueError).",
+          "hinglish": "data finite ints/floats ki list ya tuple honi chahiye (bool, NaN, infinity aur doosre types TypeError/ValueError ke saath reject hote hain)."
+        },
+        {
+          "en": "target must be a finite int or float.",
+          "hinglish": "target finite int ya float hona chahiye."
+        },
+        {
+          "en": "data must be sorted in ascending (non-decreasing) order. Otherwise UnsortedInputError (a ValueError) is raised, unless validate_sorted=False is passed, in which case the result on unsorted data is unspecified.",
+          "hinglish": "data ascending (non-decreasing) order mein sorted hona chahiye. Warna UnsortedInputError (ek ValueError) aata hai, jab tak validate_sorted=False na diya ho; us case mein unsorted data par result unspecified hai."
+        }
+      ],
+      "output": {
+        "en": "The index of a matching element, or -1 if the target is not present.",
+        "hinglish": "Matching element ka index, ya -1 agar target maujood nahi hai."
+      },
+      "mutates_input": false,
+      "complexity": {
+        "time": {
+          "best": "O(1)",
+          "average": "O(log log n)",
+          "worst": "O(n)",
+          "footnotes": {
+            "average": {
+              "en": "Assumes sorted data with roughly uniformly distributed values.",
+              "hinglish": "Maanta hai ki data sorted hai aur values lagbhag uniform failay hain."
+            }
+          }
+        },
+        "space": {
+          "auxiliary": "O(1)"
+        },
+        "notes": {
+          "en": {
+            "time": "Best case O(1): the first probe hits. Average case O(log log n) assumes sorted data with roughly uniformly distributed values. Worst case O(n) for skewed data. Requires sorted input.",
+            "space": "O(1) extra space."
+          },
+          "hinglish": {
+            "time": "Best case O(1): pehla probe hi sahi lage. Average case O(log log n) tab maana jaata hai jab data sorted ho aur values lagbhag uniform failay hon. Skewed data mein worst case O(n). Sorted input zaroori hai.",
+            "space": "O(1) extra space."
+          }
+        }
+      },
+      "explanation": {
+        "summary": {
+          "en": "Interpolation search needs sorted data. Instead of always probing the middle, it estimates where the target should be from its value, like looking near the end of a dictionary for 'zebra'.",
+          "hinglish": "Interpolation search ko sorted data chahiye. Yeh hamesha beech ko dekhne ki jagah target ki value se andaza lagata hai ki woh kahan hona chahiye, jaise dictionary mein 'zebra' ke liye end ke paas dekhna."
+        },
+        "when_to_use": {
+          "en": [
+            "Sorted data with values spread fairly evenly (for example ids or timestamps).",
+            "Not suitable for heavily skewed values, where it can degrade to O(n)."
+          ],
+          "hinglish": [
+            "Sorted data jiske values lagbhag barabar failay hon (jaise ids ya timestamps).",
+            "Bahut skewed values ke liye theek nahi, wahan yeh O(n) tak gir sakta hai."
+          ]
+        },
+        "how_it_works": {
+          "en": [
+            "Only continue while the target lies between the values at low and high.",
+            "Estimate the position by proportion: how far the target is between the two end values.",
+            "Compare the probed element with the target.",
+            "Shrink the range to the right or left of the probe and repeat."
+          ],
+          "hinglish": [
+            "Tab tak aage badho jab tak target low aur high ke values ke beech mein hai.",
+            "Anupaat se position ka andaza lagao: target dono end values ke beech kitna aage hai.",
+            "Probe kiye gaye element ko target se compare karo.",
+            "Range ko probe ke right ya left tak chhota karo aur repeat karo."
+          ]
+        }
+      },
+      "code": {
+        "language": "python",
+        "source": "arr = prepare_sorted_search_input(data, target, validate_sorted)\nlow = 0\nhigh = len(arr) - 1\nwhile low <= high and arr[low] <= target <= arr[high]:\n    if arr[high] == arr[low]:\n        return low\n    pos = low + int((high - low) * (target - arr[low]) // (arr[high] - arr[low]))\n    if arr[pos] == target:\n        return pos\n    if arr[pos] < target:\n        low = pos + 1\n    else:\n        high = pos - 1\nreturn -1",
+        "line_ids": [
+          "interpolation.init",
+          "interpolation.set_low",
+          "interpolation.set_high",
+          "interpolation.loop",
+          "interpolation.flat_check",
+          "interpolation.flat_found",
+          "interpolation.estimate",
+          "interpolation.compare_equal",
+          "interpolation.found",
+          "interpolation.compare_less",
+          "interpolation.go_right",
+          "interpolation.else_branch",
+          "interpolation.go_left",
+          "interpolation.not_found"
+        ],
+        "lines": [
+          {
+            "id": "interpolation.init",
+            "line": 1,
+            "indent": 0,
+            "code": "arr = prepare_sorted_search_input(data, target, validate_sorted)",
+            "explanation": {
+              "en": "Validate the input. The sorted-order check is one O(n) pass that runs before the search itself; pass validate_sorted=False to skip it.",
+              "hinglish": "Input validate karo. Sorted-order check ek O(n) pass hai jo search se pehle chalta hai; ise skip karne ke liye validate_sorted=False do."
+            }
+          },
+          {
+            "id": "interpolation.set_low",
+            "line": 2,
+            "indent": 0,
+            "code": "low = 0",
+            "explanation": {
+              "en": "low is the first index of the range still to search.",
+              "hinglish": "low us range ka pehla index hai jise abhi search karna hai."
+            }
+          },
+          {
+            "id": "interpolation.set_high",
+            "line": 3,
+            "indent": 0,
+            "code": "high = len(arr) - 1",
+            "explanation": {
+              "en": "high is the last index of the range. For an empty list this is -1.",
+              "hinglish": "high us range ka aakhri index hai. Khaali list ke liye yeh -1 hota hai."
+            }
+          },
+          {
+            "id": "interpolation.loop",
+            "line": 4,
+            "indent": 0,
+            "code": "while low <= high and arr[low] <= target <= arr[high]:",
+            "explanation": {
+              "en": "Continue only while the target lies between arr[low] and arr[high]; outside that span it cannot be present (this also makes an empty range safe).",
+              "hinglish": "Tab tak chalo jab tak target arr[low] aur arr[high] ke beech mein hai; us span ke bahar woh ho hi nahi sakta (isse khaali range bhi safe rehti hai)."
+            }
+          },
+          {
+            "id": "interpolation.flat_check",
+            "line": 5,
+            "indent": 1,
+            "code": "    if arr[high] == arr[low]:",
+            "explanation": {
+              "en": "If both ends have the same value the formula would divide by zero.",
+              "hinglish": "Agar dono end ka value same hai to formula zero se divide karega."
+            }
+          },
+          {
+            "id": "interpolation.flat_found",
+            "line": 6,
+            "indent": 2,
+            "code": "        return low",
+            "explanation": {
+              "en": "The loop condition already guarantees the target equals that value, so low is a match.",
+              "hinglish": "Loop condition pehle se guarantee karti hai ki target usi value ke barabar hai, isliye low match hai."
+            }
+          },
+          {
+            "id": "interpolation.estimate",
+            "line": 7,
+            "indent": 1,
+            "code": "    pos = low + int((high - low) * (target - arr[low]) // (arr[high] - arr[low]))",
+            "explanation": {
+              "en": "Estimate the index: start at low and move forward by the fraction (target - arr[low]) / (arr[high] - arr[low]) of the range width.",
+              "hinglish": "Index ka andaza lagao: low se shuru karo aur range ki chaudai ka fraction (target - arr[low]) / (arr[high] - arr[low]) aage badho."
+            }
+          },
+          {
+            "id": "interpolation.compare_equal",
+            "line": 8,
+            "indent": 1,
+            "code": "    if arr[pos] == target:",
+            "explanation": {
+              "en": "Is the probed element the target?",
+              "hinglish": "Kya probe kiya gaya element target hai?"
+            }
+          },
+          {
+            "id": "interpolation.found",
+            "line": 9,
+            "indent": 2,
+            "code": "        return pos",
+            "explanation": {
+              "en": "Found it: return the index.",
+              "hinglish": "Mil gaya: index return karo."
+            }
+          },
+          {
+            "id": "interpolation.compare_less",
+            "line": 10,
+            "indent": 1,
+            "code": "    if arr[pos] < target:",
+            "explanation": {
+              "en": "Is the probed element smaller than the target?",
+              "hinglish": "Kya probe kiya gaya element target se chhota hai?"
+            }
+          },
+          {
+            "id": "interpolation.go_right",
+            "line": 11,
+            "indent": 2,
+            "code": "        low = pos + 1",
+            "explanation": {
+              "en": "Yes: continue to the right of the probe.",
+              "hinglish": "Haan: probe ke right mein aage badho."
+            }
+          },
+          {
+            "id": "interpolation.else_branch",
+            "line": 12,
+            "indent": 1,
+            "code": "    else:",
+            "explanation": {
+              "en": "Otherwise the probed element is larger than the target.",
+              "hinglish": "Warna probe kiya gaya element target se bada hai."
+            }
+          },
+          {
+            "id": "interpolation.go_left",
+            "line": 13,
+            "indent": 2,
+            "code": "        high = pos - 1",
+            "explanation": {
+              "en": "Continue to the left of the probe.",
+              "hinglish": "Probe ke left mein aage badho."
+            }
+          },
+          {
+            "id": "interpolation.not_found",
+            "line": 14,
+            "indent": 0,
+            "code": "return -1",
+            "explanation": {
+              "en": "The target is outside the remaining range or the range is empty: return -1.",
+              "hinglish": "Target bachi hui range ke bahar hai ya range khaali hai: -1 return karo."
+            }
+          }
+        ]
+      },
+      "examples": [
+        {
+          "input": {
+            "data": [
+              10,
+              20,
+              30,
+              40,
+              50,
+              60,
+              70,
+              80,
+              90
+            ],
+            "target": 70
+          },
+          "output": 6
+        },
+        {
+          "input": {
+            "data": [
+              10,
+              20,
+              30,
+              40,
+              50,
+              60,
+              70,
+              80,
+              90
+            ],
+            "target": 65
+          },
+          "output": -1
+        }
+      ],
+      "requires_sorted_input": true
+    },
+    {
+      "id": "exponential-search",
+      "name": "Exponential Search",
+      "category": "searching",
+      "function": "exponential_search",
+      "signature": "exponential_search(data, target, validate_sorted=True)",
+      "preconditions": [
+        {
+          "en": "data must be a list or tuple of finite ints/floats (bool, NaN, infinity and other types are rejected with TypeError/ValueError).",
+          "hinglish": "data finite ints/floats ki list ya tuple honi chahiye (bool, NaN, infinity aur doosre types TypeError/ValueError ke saath reject hote hain)."
+        },
+        {
+          "en": "target must be a finite int or float.",
+          "hinglish": "target finite int ya float hona chahiye."
+        },
+        {
+          "en": "data must be sorted in ascending (non-decreasing) order. Otherwise UnsortedInputError (a ValueError) is raised, unless validate_sorted=False is passed, in which case the result on unsorted data is unspecified.",
+          "hinglish": "data ascending (non-decreasing) order mein sorted hona chahiye. Warna UnsortedInputError (ek ValueError) aata hai, jab tak validate_sorted=False na diya ho; us case mein unsorted data par result unspecified hai."
+        }
+      ],
+      "output": {
+        "en": "The index of a matching element, or -1 if the target is not present.",
+        "hinglish": "Matching element ka index, ya -1 agar target maujood nahi hai."
+      },
+      "mutates_input": false,
+      "complexity": {
+        "time": {
+          "best": "O(1)",
+          "average": "O(log n)",
+          "worst": "O(log n)"
+        },
+        "space": {
+          "auxiliary": "O(1)"
+        },
+        "notes": {
+          "en": {
+            "time": "Best case O(1): the target is the first element. Average and worst case O(log n): about log2(i) doublings plus a binary search over about i elements, where i is the target's index. Requires sorted input.",
+            "space": "O(1) extra space: both phases are iterative."
+          },
+          "hinglish": {
+            "time": "Best case O(1): target pehla element hai. Average aur worst case O(log n): lagbhag log2(i) baar double karna aur lagbhag i elements par binary search, jahan i target ka index hai. Sorted input zaroori hai.",
+            "space": "O(1) extra space: dono phases iterative hain."
+          }
+        }
+      },
+      "explanation": {
+        "summary": {
+          "en": "Exponential search needs sorted data. It doubles an upper bound (1, 2, 4, 8, ...) until it passes the target, then runs binary search inside that bounded range.",
+          "hinglish": "Exponential search ko sorted data chahiye. Yeh ek upper bound ko double karta jaata hai (1, 2, 4, 8, ...) jab tak woh target ko paar na kar le, phir us bounded range ke andar binary search chalata hai."
+        },
+        "when_to_use": {
+          "en": [
+            "Sorted data when the target is likely near the beginning.",
+            "Very large or unbounded sorted sequences, where the end is not known up front."
+          ],
+          "hinglish": [
+            "Sorted data jab target ke shuru ke paas hone ki sambhavna ho.",
+            "Bahut bade ya unbounded sorted sequences jahan end pehle se pata nahi hota."
+          ]
+        },
+        "how_it_works": {
+          "en": [
+            "If the list is empty return -1; if the first element matches return 0.",
+            "Double the bound while it is inside the list and its element is not larger than the target.",
+            "The target must now lie between bound / 2 and the bound (limited to the last index).",
+            "Run binary search in that range."
+          ],
+          "hinglish": [
+            "Agar list khaali hai to -1 return karo; agar pehla element match kare to 0 return karo.",
+            "Jab tak bound list ke andar hai aur uska element target se bada nahi hai, bound ko double karo.",
+            "Ab target bound / 2 aur bound ke beech hona chahiye (last index tak seemit).",
+            "Us range mein binary search chalao."
+          ]
+        }
+      },
+      "code": {
+        "language": "python",
+        "source": "arr = prepare_sorted_search_input(data, target, validate_sorted)\nn = len(arr)\nif n == 0:\n    return -1\nif arr[0] == target:\n    return 0\nbound = 1\nwhile bound < n and arr[bound] <= target:\n    bound *= 2\nlow = bound // 2\nhigh = min(bound, n - 1)\nwhile low <= high:\n    mid = (low + high) // 2\n    if arr[mid] == target:\n        return mid\n    if arr[mid] < target:\n        low = mid + 1\n    else:\n        high = mid - 1\nreturn -1",
+        "line_ids": [
+          "exponential.init",
+          "exponential.length",
+          "exponential.empty_check",
+          "exponential.empty_return",
+          "exponential.check_first",
+          "exponential.first_found",
+          "exponential.bound_init",
+          "exponential.grow_loop",
+          "exponential.double",
+          "exponential.range_low",
+          "exponential.range_high",
+          "exponential.bsearch_loop",
+          "exponential.mid",
+          "exponential.compare_equal",
+          "exponential.found",
+          "exponential.compare_less",
+          "exponential.go_right",
+          "exponential.else_branch",
+          "exponential.go_left",
+          "exponential.not_found"
+        ],
+        "lines": [
+          {
+            "id": "exponential.init",
+            "line": 1,
+            "indent": 0,
+            "code": "arr = prepare_sorted_search_input(data, target, validate_sorted)",
+            "explanation": {
+              "en": "Validate the input. The sorted-order check is one O(n) pass that runs before the search itself; pass validate_sorted=False to skip it.",
+              "hinglish": "Input validate karo. Sorted-order check ek O(n) pass hai jo search se pehle chalta hai; ise skip karne ke liye validate_sorted=False do."
+            }
+          },
+          {
+            "id": "exponential.length",
+            "line": 2,
+            "indent": 0,
+            "code": "n = len(arr)",
+            "explanation": {
+              "en": "Remember how many elements there are.",
+              "hinglish": "Yaad rakho ki kitne elements hain."
+            }
+          },
+          {
+            "id": "exponential.empty_check",
+            "line": 3,
+            "indent": 0,
+            "code": "if n == 0:",
+            "explanation": {
+              "en": "An empty list cannot contain the target.",
+              "hinglish": "Khaali list mein target ho hi nahi sakta."
+            }
+          },
+          {
+            "id": "exponential.empty_return",
+            "line": 4,
+            "indent": 1,
+            "code": "    return -1",
+            "explanation": {
+              "en": "Return -1 straight away.",
+              "hinglish": "Seedha -1 return karo."
+            }
+          },
+          {
+            "id": "exponential.check_first",
+            "line": 5,
+            "indent": 0,
+            "code": "if arr[0] == target:",
+            "explanation": {
+              "en": "Check index 0 first; the doubling phase starts at index 1.",
+              "hinglish": "Pehle index 0 check karo; doubling phase index 1 se shuru hota hai."
+            }
+          },
+          {
+            "id": "exponential.first_found",
+            "line": 6,
+            "indent": 1,
+            "code": "    return 0",
+            "explanation": {
+              "en": "The first element matched: return 0 (the O(1) best case).",
+              "hinglish": "Pehla element match ho gaya: 0 return karo (O(1) best case)."
+            }
+          },
+          {
+            "id": "exponential.bound_init",
+            "line": 7,
+            "indent": 0,
+            "code": "bound = 1",
+            "explanation": {
+              "en": "Start the upper bound at index 1.",
+              "hinglish": "Upper bound ko index 1 se shuru karo."
+            }
+          },
+          {
+            "id": "exponential.grow_loop",
+            "line": 8,
+            "indent": 0,
+            "code": "while bound < n and arr[bound] <= target:",
+            "explanation": {
+              "en": "Keep doubling while the bound is inside the list and its value is not above the target.",
+              "hinglish": "Jab tak bound list ke andar hai aur uski value target se upar nahi hai, double karte raho."
+            }
+          },
+          {
+            "id": "exponential.double",
+            "line": 9,
+            "indent": 1,
+            "code": "    bound *= 2",
+            "explanation": {
+              "en": "Double the bound: 1, 2, 4, 8, ...",
+              "hinglish": "Bound ko double karo: 1, 2, 4, 8, ..."
+            }
+          },
+          {
+            "id": "exponential.range_low",
+            "line": 10,
+            "indent": 0,
+            "code": "low = bound // 2",
+            "explanation": {
+              "en": "The previous bound (bound / 2) held a value not above the target, so the search range starts there.",
+              "hinglish": "Pichhla bound (bound / 2) target se upar nahi tha, isliye search range wahin se shuru hoti hai."
+            }
+          },
+          {
+            "id": "exponential.range_high",
+            "line": 11,
+            "indent": 0,
+            "code": "high = min(bound, n - 1)",
+            "explanation": {
+              "en": "The range ends at the bound, but never beyond the last index.",
+              "hinglish": "Range bound par khatam hoti hai, par last index se aage kabhi nahi."
+            }
+          },
+          {
+            "id": "exponential.bsearch_loop",
+            "line": 12,
+            "indent": 0,
+            "code": "while low <= high:",
+            "explanation": {
+              "en": "Binary search phase: repeat while the range is not empty.",
+              "hinglish": "Binary search phase: jab tak range khaali nahi hai, repeat karo."
+            }
+          },
+          {
+            "id": "exponential.mid",
+            "line": 13,
+            "indent": 1,
+            "code": "    mid = (low + high) // 2",
+            "explanation": {
+              "en": "Pick the middle index of the range.",
+              "hinglish": "Range ka beech wala index chuno."
+            }
+          },
+          {
+            "id": "exponential.compare_equal",
+            "line": 14,
+            "indent": 1,
+            "code": "    if arr[mid] == target:",
+            "explanation": {
+              "en": "Is the middle element the target?",
+              "hinglish": "Kya beech ka element hi target hai?"
+            }
+          },
+          {
+            "id": "exponential.found",
+            "line": 15,
+            "indent": 2,
+            "code": "        return mid",
+            "explanation": {
+              "en": "Found it: return the index.",
+              "hinglish": "Mil gaya: index return karo."
+            }
+          },
+          {
+            "id": "exponential.compare_less",
+            "line": 16,
+            "indent": 1,
+            "code": "    if arr[mid] < target:",
+            "explanation": {
+              "en": "Is the middle element smaller than the target?",
+              "hinglish": "Kya beech ka element target se chhota hai?"
+            }
+          },
+          {
+            "id": "exponential.go_right",
+            "line": 17,
+            "indent": 2,
+            "code": "        low = mid + 1",
+            "explanation": {
+              "en": "Yes: discard the left half including mid.",
+              "hinglish": "Haan: mid samet left half hata do."
+            }
+          },
+          {
+            "id": "exponential.else_branch",
+            "line": 18,
+            "indent": 1,
+            "code": "    else:",
+            "explanation": {
+              "en": "Otherwise the middle element is larger than the target.",
+              "hinglish": "Warna beech ka element target se bada hai."
+            }
+          },
+          {
+            "id": "exponential.go_left",
+            "line": 19,
+            "indent": 2,
+            "code": "        high = mid - 1",
+            "explanation": {
+              "en": "Discard the right half including mid.",
+              "hinglish": "Mid samet right half hata do."
+            }
+          },
+          {
+            "id": "exponential.not_found",
+            "line": 20,
+            "indent": 0,
+            "code": "return -1",
+            "explanation": {
+              "en": "The range is empty and nothing matched: return -1.",
+              "hinglish": "Range khaali ho gayi aur kuch match nahi hua: -1 return karo."
+            }
+          }
+        ]
+      },
+      "examples": [
+        {
+          "input": {
+            "data": [
+              1,
+              3,
+              5,
+              7,
+              9,
+              11,
+              13,
+              15,
+              17,
+              19,
+              21
+            ],
+            "target": 15
+          },
+          "output": 7
+        },
+        {
+          "input": {
+            "data": [
+              1,
+              3,
+              5,
+              7,
+              9,
+              11,
+              13,
+              15,
+              17,
+              19,
+              21
+            ],
+            "target": 2
+          },
+          "output": -1
+        }
+      ],
+      "requires_sorted_input": true
+    }
+  ]
+}
