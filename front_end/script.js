@@ -33,6 +33,8 @@ const nextBtn = document.getElementById("nextBtn");
 const resetBtn = document.getElementById("resetBtn");
 const runBtn = document.getElementById("runBtn");
 const randomBtn = document.getElementById("randomBtn");
+const speedInput = document.getElementById("speedInput");
+const speedValue = document.getElementById("speedValue");
 
 
 // =====================================================
@@ -47,6 +49,9 @@ let playTimer = null;
 let startedAt = 0;
 let finishedAt = 0;
 let isPlaying = false;
+let stepDelay = speedInput ? Number(speedInput.value) || 550 : 550;
+let lastRawInput = arrayInput ? arrayInput.value : "";
+let sortedSet = new Set();
 
 const searchingAlgorithms = [
     "linear",
@@ -371,13 +376,16 @@ function updateAlgorithmInfo() {
     document.getElementById("worstCase").textContent = info.worst;
     document.getElementById("spaceCase").textContent = info.space;
 
-    pythonCode.textContent = pythonExamples[name];
+    renderCodePanel(name, steps[currentStep] ? steps[currentStep].line : 1);
 
     targetGroup.style.display = searchingAlgorithms.includes(name)
         ? "flex"
         : "none";
 
-    explanation.textContent = languageSelect.value === "hi"
+    const activeStep = steps[currentStep];
+    const stepPrefix = activeStep ? `${languageSelect.value === "hi" ? activeStep.hi : activeStep.en} — ` : "";
+    explanation.textContent = stepPrefix + (languageSelect.value === "hi" ? info.hi : info.en);
+    if (false) explanation.textContent = languageSelect.value === "hi"
         ? info.hi
         : info.en;
 }
@@ -391,7 +399,7 @@ function getArrayFromInput() {
     const raw = arrayInput.value.trim();
 
     if (!raw) {
-        throw new Error("Please enter some numbers.");
+        return [];
     }
 
     const parts = raw.split(",");
@@ -419,7 +427,146 @@ let comparisons = 0;
 let swaps = 0;
 let writes = 0;
 
+const codeLineMap = {
+    "bubble.init": 1, "bubble.outer_loop": 4, "bubble.compare": 6, "bubble.swap": 7, "bubble.done": 11,
+    "selection.init": 1, "selection.outer_loop": 4, "selection.compare": 8, "selection.swap": 11, "selection.done": 15,
+    "insertion.init": 1, "insertion.pick_key": 3, "insertion.compare": 6, "insertion.shift": 7, "insertion.insert": 10, "insertion.done": 12,
+    "merge.init": 1, "merge.divide": 5, "merge.compare": 13, "merge.write": 14, "merge.copy_left": 20, "merge.copy_right": 21, "merge.done": 22,
+    "quick.init": 1, "quick.choose_pivot": 5, "quick.compare": 6, "quick.swap": 7, "quick.pivot_placed": 9, "quick.done": 12,
+    "linear.init": 1, "linear.compare": 3, "linear.found": 4, "linear.not_found": 6,
+    "binary.init": 1, "binary.mid": 6, "binary.found": 9, "binary.go_right": 11, "binary.go_left": 13, "binary.not_found": 15,
+    "jump.init": 3, "jump.block_found": 9, "jump.jump_advance": 10, "jump.scan_compare": 17, "jump.found": 18, "jump.not_found": 20,
+    "interpolation.init": 1, "interpolation.estimate": 12, "interpolation.found": 18, "interpolation.go_right": 20, "interpolation.go_left": 22, "interpolation.not_found": 24,
+    "exponential.init": 14, "exponential.empty": 18, "exponential.first_found": 20, "exponential.grow_check": 23, "exponential.grow_double": 24, "exponential.found": 6, "exponential.go_right": 8, "exponential.go_left": 10, "exponential.not_found": 12
+};
+
+function renderCodePanel(algo, activeLine = 1) {
+    const source = pythonExamples[algo] || "";
+    const lines = source.split(/\r?\n/);
+    pythonCode.replaceChildren();
+    let activeEl = null;
+
+    lines.forEach((text, idx) => {
+        const lineNo = idx + 1;
+        const row = document.createElement("div");
+        row.className = lineNo === activeLine ? "code-line active" : "code-line";
+        row.dataset.line = String(lineNo);
+
+        const numSpan = document.createElement("span");
+        numSpan.className = "code-line-num";
+        numSpan.textContent = String(lineNo);
+
+        const textSpan = document.createElement("span");
+        textSpan.className = "code-line-text";
+        textSpan.textContent = text;
+
+        row.append(numSpan, textSpan);
+        pythonCode.appendChild(row);
+        if (lineNo === activeLine) activeEl = row;
+    });
+
+    if (activeEl && typeof activeEl.scrollIntoView === "function") {
+        activeEl.scrollIntoView({ block: "nearest", behavior: "smooth" });
+    }
+}
+
+function inferStepMeta(algo, message) {
+    let suffix = "init";
+    if (message.startsWith("Starting array:")) suffix = "init";
+    else if (message.startsWith("Sorting complete!")) suffix = "done";
+    else if (message.startsWith("Found 0") || (algo === "exponential" && message.includes("at index 0!"))) suffix = "first_found";
+    else if (message.startsWith("Found ")) suffix = "found";
+    else if (message.includes("was not found")) suffix = "not_found";
+    else if (message.startsWith("The array is empty")) suffix = "empty";
+    else if (algo === "bubble") {
+        if (message.startsWith("Compare ")) suffix = "compare";
+        else if (message.includes("swap them")) suffix = "swap";
+        else if (message.startsWith("No swaps")) suffix = "done";
+        else suffix = "outer_loop";
+    } else if (algo === "selection") {
+        if (message.startsWith("Compare ")) suffix = "compare";
+        else if (message.startsWith("Place ")) suffix = "swap";
+        else suffix = "outer_loop";
+    } else if (algo === "insertion") {
+        if (message.startsWith("Take ")) suffix = "pick_key";
+        else if (message.startsWith("Compare ") || message.startsWith("Check ")) suffix = "compare";
+        else if (message.startsWith("Shift ")) suffix = "shift";
+        else suffix = "insert";
+    } else if (algo === "merge") {
+        if (message.startsWith("Divide ")) suffix = "divide";
+        else if (message.startsWith("Compare ")) suffix = "compare";
+        else if (message.startsWith("Merge ")) suffix = "write";
+        else if (message.includes("remaining left")) suffix = "copy_left";
+        else suffix = "copy_right";
+    } else if (algo === "quick") {
+        if (message.startsWith("Choose ")) suffix = "choose_pivot";
+        else if (message.startsWith("Compare ")) suffix = "compare";
+        else if (message.startsWith("Move ")) suffix = "swap";
+        else suffix = "pivot_placed";
+    } else if (algo === "linear") {
+        suffix = "compare";
+    } else if (algo === "binary") {
+        suffix = message.includes("right half") ? "go_right" : "go_left";
+    } else if (algo === "jump") {
+        if (message.startsWith("The target may be")) suffix = "block_found";
+        else if (message.startsWith("Jump past")) suffix = "jump_advance";
+        else suffix = "scan_compare";
+    } else if (algo === "interpolation") {
+        suffix = message.includes("Move right") ? "go_right" : "go_left";
+    } else if (algo === "exponential") {
+        if (message.startsWith("The target is within")) suffix = "grow_check";
+        else if (message.startsWith("Expand ")) suffix = "grow_double";
+        else suffix = message.includes("right half") ? "go_right" : "go_left";
+    }
+
+    const lineId = `${algo}.${suffix}`;
+    const line = codeLineMap[lineId] || 1;
+    const hi = message
+        .replace(/^Starting array: (.*)$/, "Shuruaati array: $1")
+        .replace(/^Sorting complete! The array is in ascending order\.$/, "Sorting poori hui! Array ab ascending order mein hai.")
+        .replace(/^Compare the current minimum (.+) with (.+)\.$/, "Current minimum $1 ko $2 ke saath compare karein.")
+        .replace(/^Compare left value (.+) and right value (.+)\.$/, "Left value $1 aur right value $2 ko compare karein.")
+        .replace(/^Compare sorted value (.+) at index (.+) with key (.+)\.$/, "Index $2 ki sorted value $1 ko key $3 se compare karein.")
+        .replace(/^Compare (.+) with pivot (.+)\.$/, "$1 ko pivot $2 se compare karein.")
+        .replace(/^Compare (.+) and (.+)\.$/, "$1 aur $2 ko compare karein.")
+        .replace(/^The values are in the wrong order, so swap them\.$/, "Values galat order mein hain, isliye inhe swap karein.")
+        .replace(/^No swaps needed in this pass\. Remaining elements are sorted\.$/, "Is pass mein koi swap nahi hua. Baaki elements pehle se sorted hain.")
+        .replace(/^Value (.+) at index (.+) is now in its sorted position\.$/, "Index $2 par value $1 ab apni final sorted position par hai.")
+        .replace(/^Place (.+) into sorted position (.+)\.$/, "Sabse chhoti value $1 ko sorted position $2 par rakhein.")
+        .replace(/^(.+) is already the smallest remaining value at index (.+)\.$/, "Index $2 par $1 pehle se hi sabse chhoti bachi hui value hai.")
+        .replace(/^Take key (.+) at index (.+) and find its place in sorted prefix \[0\.\.(.+)\]\.$/, "Index $2 se key $1 lein aur sorted prefix [0..$3] mein iski sahi jagah dhoondein.")
+        .replace(/^Shift (.+) right from index (.+) to (.+) to make room for key (.+)\.$/, "Key $4 ke liye jagah banane ko $1 ko index $2 se $3 par right shift karein.")
+        .replace(/^Insert key (.+) at sorted index (.+)\.$/, "Key $1 ko sorted index $2 par insert karein.")
+        .replace(/^Divide the section from index (.+) to (.+)\.$/, "Index $1 se $2 tak ke section ko divide karein.")
+        .replace(/^Merge the smaller available value at index (.+)\.$/, "Chhoti value ko merge karke index $1 par likhein.")
+        .replace(/^Copy the remaining left value to index (.+)\.$/, "Bachi hui left value ko index $1 par copy karein.")
+        .replace(/^Copy the remaining right value to index (.+)\.$/, "Bachi hui right value ko index $1 par copy karein.")
+        .replace(/^Choose (.+) as the pivot\.$/, "$1 ko pivot chunein.")
+        .replace(/^Move a value smaller than or equal to the pivot to the left\.$/, "Pivot se chhoti ya barabar value ko left side swap karein.")
+        .replace(/^Place pivot (.+) into its correct position\.$/, "Pivot $1 ko uski sahi sorted position par rakhein.")
+        .replace(/^Pivot (.+) at index (.+) is now in its sorted position\.$/, "Index $2 par pivot $1 ab apni sahi sorted position par hai.")
+        .replace(/^Found (.+) at index (.+)!$/, "Target $1 index $2 par mil gaya!")
+        .replace(/^Index (.+): (.+) is not the target\.$/, "Index $1 par $2 target nahi hai, aage check karein.")
+        .replace(/^Target (.+) was not found.*$/, "Target $1 array mein nahi mila.")
+        .replace(/^(.+) is too small\. Search the right half\.$/, "$1 target se chhota hai. Right half mein search karein.")
+        .replace(/^(.+) is too large\. Search the left half\.$/, "$1 target se bada hai. Left half mein search karein.")
+        .replace(/^The target may be in this block\. Check individual values\.$/, "Target is block mein ho sakta hai. Ab ek-ek value check karein.")
+        .replace(/^Jump past the block ending at (.+)\.$/, "$1 par khatam hone wale block ke aage jump karein.")
+        .replace(/^Check (.+) at index (.+)\.$/, "Index $2 par value $1 check karein.")
+        .replace(/^Estimated position (.+) is too small\. Move right\.$/, "Estimated position $1 chhoti hai. Right move karein.")
+        .replace(/^Estimated position (.+) is too large\. Move left\.$/, "Estimated position $1 badi hai. Left move karein.")
+        .replace(/^The array is empty\.$/, "Array khaali hai.")
+        .replace(/^The target is within the range ending at index (.+)\.$/, "Target index $1 tak ke range ke andar hai.")
+        .replace(/^Expand the search range to index (.+)\.$/, "Search range ko double karke index $1 tak badhayein.")
+        .replace(/^Check (.+)\. Search the right half\.$/, "$1 check kiya. Ab right half mein search karein.")
+        .replace(/^Check (.+)\. Search the left half\.$/, "$1 check kiya. Ab left half mein search karein.");
+
+    return { lineId, line, en: message, hi };
+}
+
 function saveStep(message, active = [], sorted = [], found = []) {
+    for (const idx of sorted) sortedSet.add(idx);
+    const meta = inferStepMeta(algorithmSelect.value, message);
     steps.push({
         array: [...workingArray],
         comparisons,
@@ -427,7 +574,11 @@ function saveStep(message, active = [], sorted = [], found = []) {
         writes,
         message,
         active: [...active],
-        sorted: [...sorted],
+        en: meta.en,
+        hi: meta.hi,
+        lineId: meta.lineId,
+        line: meta.line,
+        sorted: [...sortedSet].sort((a, b) => a - b),
         found: [...found]
     });
 }
@@ -468,7 +619,13 @@ function bubbleSort() {
             }
         }
 
-        if (!changed) break;
+        sortedSet.add(n - 1 - i);
+        if (!changed) {
+            for (let k = 0; k < n - 1 - i; k++) sortedSet.add(k);
+            saveStep("No swaps needed in this pass. Remaining elements are sorted.", [], [n - 1 - i]);
+            break;
+        }
+        saveStep(`Value ${workingArray[n - 1 - i]} at index ${n - 1 - i} is now in its sorted position.`, [], [n - 1 - i]);
     }
 }
 
@@ -493,9 +650,12 @@ function selectionSort() {
         }
 
         if (smallest !== i) {
-            swap(i, smallest, `Place ${workingArray[smallest]} into the next sorted position.`);
+            const minVal = workingArray[smallest];
+            sortedSet.add(i);
+            swap(i, smallest, `Place ${minVal} into sorted position ${i}.`);
         } else {
-            saveStep(`${workingArray[i]} is already the smallest remaining value.`, [i]);
+            sortedSet.add(i);
+            saveStep(`${workingArray[i]} is already the smallest remaining value at index ${i}.`, [i], [i]);
         }
     }
 }
@@ -506,29 +666,31 @@ function selectionSort() {
 // =====================================================
 
 function insertionSort() {
+    if (workingArray.length > 0) sortedSet.add(0);
     for (let i = 1; i < workingArray.length; i++) {
         const key = workingArray[i];
         let j = i - 1;
 
-        saveStep(`Take ${key} and find its place in the sorted section.`, [i]);
+        saveStep(`Take key ${key} at index ${i} and find its place in sorted prefix [0..${i - 1}].`, [i]);
 
         while (j >= 0) {
             compare(j, j + 1,
-                `Check whether ${workingArray[j]} is greater than ${key}.`);
+                `Compare sorted value ${workingArray[j]} at index ${j} with key ${key}.`);
 
             if (workingArray[j] <= key) break;
 
             workingArray[j + 1] = workingArray[j];
             writes++;
 
-            saveStep(`Shift ${workingArray[j]} one position to the right.`, [j, j + 1]);
+            saveStep(`Shift ${workingArray[j]} right from index ${j} to ${j + 1} to make room for key ${key}.`, [j, j + 1]);
             j--;
         }
 
         workingArray[j + 1] = key;
         writes++;
 
-        saveStep(`Insert ${key} at index ${j + 1}.`, [j + 1]);
+        sortedSet.add(i);
+        saveStep(`Insert key ${key} at sorted index ${j + 1}.`, [j + 1], [i]);
     }
 }
 
@@ -559,6 +721,7 @@ function mergeSort() {
         while (i < leftPart.length && j < rightPart.length) {
             comparisons++;
 
+            saveStep(`Compare left value ${leftPart[i]} and right value ${rightPart[j]}.`, [left + i, mid + 1 + j]);
             if (leftPart[i] <= rightPart[j]) {
                 workingArray[k] = leftPart[i++];
             } else {
@@ -566,6 +729,7 @@ function mergeSort() {
             }
 
             writes++;
+            if (k === right) { for (let idx = left; idx <= right; idx++) sortedSet.add(idx); }
             saveStep(`Merge the smaller available value at index ${k}.`, [k]);
             k++;
         }
@@ -573,6 +737,7 @@ function mergeSort() {
         while (i < leftPart.length) {
             workingArray[k] = leftPart[i++];
             writes++;
+            if (k === right) { for (let idx = left; idx <= right; idx++) sortedSet.add(idx); }
             saveStep(`Copy the remaining left value to index ${k}.`, [k]);
             k++;
         }
@@ -580,6 +745,7 @@ function mergeSort() {
         while (j < rightPart.length) {
             workingArray[k] = rightPart[j++];
             writes++;
+            if (k === right) { for (let idx = left; idx <= right; idx++) sortedSet.add(idx); }
             saveStep(`Copy the remaining right value to index ${k}.`, [k]);
             k++;
         }
@@ -614,14 +780,21 @@ function quickSort() {
         }
 
         if (i !== high) {
+            sortedSet.add(i);
             swap(i, high, `Place pivot ${pivot} into its correct position.`);
+        } else {
+            sortedSet.add(i);
+            saveStep(`Pivot ${pivot} at index ${i} is now in its sorted position.`, [i], [i]);
         }
 
         return i;
     }
 
     function sort(low, high) {
-        if (low >= high) return;
+        if (low >= high) {
+            if (low === high && low >= 0 && low < workingArray.length) sortedSet.add(low);
+            return;
+        }
 
         const pivotIndex = partition(low, high);
         sort(low, pivotIndex - 1);
@@ -865,6 +1038,7 @@ function runVisualization() {
     }
 
     if (isSearching && sortedSearchAlgorithms.includes(algorithm)) {
+        lastRawInput = arrayInput.value;
         workingArray.sort((a, b) => a - b);
         arrayInput.value = workingArray.join(", ");
 
@@ -882,7 +1056,14 @@ function runVisualization() {
     swaps = 0;
     writes = 0;
 
-    saveStep("Starting array: " + workingArray.join(", "));
+    sortedSet.clear();
+    if (!isSearching || !sortedSearchAlgorithms.includes(algorithm)) {
+        lastRawInput = arrayInput.value;
+    }
+    if (workingArray.length === 0) {
+        notice.textContent = "Please enter some numbers. Showing empty array state.";
+    }
+    saveStep("Starting array: " + (workingArray.length ? workingArray.join(", ") : "(empty)"));
 
     startedAt = performance.now();
     finishedAt = 0;
@@ -947,7 +1128,7 @@ function renderStep(index) {
             bar.classList.add("comparing");
         }
 
-        if (step.sorted.includes(i)) {
+        if (step.sorted.includes(i) && !step.active.includes(i)) {
             bar.classList.add("sorted");
         }
 
@@ -972,7 +1153,12 @@ function renderStep(index) {
     swapsDisplay.textContent = step.swaps;
     writesDisplay.textContent = step.writes;
 
-    stepMessage.textContent = step.message;
+    const isHi = languageSelect.value === "hi";
+    const localizedMsg = (isHi ? step.hi : step.en) || step.message;
+    stepMessage.textContent = localizedMsg;
+    const info = algorithmInfo[algorithmSelect.value];
+    explanation.textContent = `${localizedMsg} — ${isHi ? info.hi : info.en}`;
+    renderCodePanel(algorithmSelect.value, step.line || 1);
 
     const percentage = steps.length <= 1
         ? 100
@@ -983,9 +1169,13 @@ function renderStep(index) {
         `Step ${currentStep + 1} of ${steps.length}`;
 
     previousBtn.disabled = currentStep === 0;
-    nextBtn.disabled = currentStep === steps.length - 1;
+    nextBtn.disabled = currentStep >= steps.length - 1;
+    playBtn.disabled = steps.length <= 1;
+    resetBtn.disabled = currentStep === 0 && !isPlaying && arrayInput.value === lastRawInput;
 
-    const elapsed = Math.max(0, finishedAt - startedAt);
+    const totalMs = Math.max(0.05, finishedAt - startedAt);
+    const ratio = steps.length <= 1 ? 0 : currentStep / (steps.length - 1);
+    const elapsed = totalMs * ratio;
     elapsedDisplay.textContent = `${elapsed.toFixed(2)} ms`;
 }
 
@@ -1021,7 +1211,7 @@ function playVisualization() {
         }
 
         renderStep(currentStep + 1);
-    }, 550);
+    }, stepDelay);
 }
 
 playBtn.addEventListener("click", () => {
@@ -1042,7 +1232,31 @@ nextBtn.addEventListener("click", () => {
     renderStep(currentStep + 1);
 });
 
+if (speedInput) {
+    const onSpeedChange = () => {
+        stepDelay = Math.max(100, Math.min(1200, Number(speedInput.value) || 550));
+        if (speedValue) speedValue.textContent = `${stepDelay} ms`;
+        if (isPlaying) {
+            clearInterval(playTimer);
+            playTimer = setInterval(() => {
+                if (currentStep >= steps.length - 1) {
+                    stopPlayback();
+                    renderStep(currentStep);
+                    return;
+                }
+                renderStep(currentStep + 1);
+            }, stepDelay);
+        }
+    };
+    speedInput.addEventListener("input", onSpeedChange);
+    speedInput.addEventListener("change", onSpeedChange);
+}
+
 resetBtn.addEventListener("click", () => {
+    if (lastRawInput && arrayInput.value !== lastRawInput) {
+        arrayInput.value = lastRawInput;
+    }
+    notice.textContent = "Visualization reset to Step 1.";
     stopPlayback();
     renderStep(0);
 });
@@ -1067,6 +1281,7 @@ algorithmSelect.addEventListener("change", () => {
 });
 
 languageSelect.addEventListener("change", () => {
+    if (steps.length) renderStep(currentStep);
     updateAlgorithmInfo();
 });
 
