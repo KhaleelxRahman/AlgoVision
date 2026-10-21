@@ -1,4 +1,4 @@
-# ⚡ AlgoVision — Interactive DSA Visualizer
+# âš¡ AlgoVision â€” Interactive DSA Visualizer
 
 <p align="center">
   <strong>Understand Algorithms. Visualize Every Step. Master DSA.</strong>
@@ -17,7 +17,7 @@
 
 ---
 
-## 🚀 Overview
+## ðŸš€ Overview
 
 **AlgoVision** is a browser-based educational project focused on making algorithm execution visual, interactive, and intuitive.
 
@@ -25,7 +25,7 @@ Instead of reading code without understanding how it works, learners can explore
 
 The project is designed as a lightweight frontend application built with **HTML, CSS, and vanilla JavaScript**, without requiring a backend server or database.
 
-## 🎯 Project Objectives
+## ðŸŽ¯ Project Objectives
 
 - Make DSA concepts easier to understand through visual learning.
 - Demonstrate algorithm execution step by step.
@@ -34,7 +34,7 @@ The project is designed as a lightweight frontend application built with **HTML,
 - Provide a responsive interface for learners and students.
 - Keep the initial implementation simple to run and demonstrate.
 
-## ✨ Core Features
+## âœ¨ Core Features
 
 | Feature | Description |
 |---|---|
@@ -51,17 +51,17 @@ The project is designed as a lightweight frontend application built with **HTML,
 
 *Feature descriptions define the intended project scope; implementation status should be updated as each feature is completed.*
 
-## 🧮 Algorithms in Scope
+## ðŸ§® Algorithms in Scope
 
 ### Sorting Algorithms
 
 | Algorithm | Best Time | Average Time | Worst Time |
 |---|---:|---:|---:|
-| Bubble Sort | O(n) | O(n²) | O(n²) |
-| Selection Sort | O(n²) | O(n²) | O(n²) |
-| Insertion Sort | O(n) | O(n²) | O(n²) |
+| Bubble Sort | O(n) | O(nÂ²) | O(nÂ²) |
+| Selection Sort | O(nÂ²) | O(nÂ²) | O(nÂ²) |
+| Insertion Sort | O(n) | O(nÂ²) | O(nÂ²) |
 | Merge Sort | O(n log n) | O(n log n) | O(n log n) |
-| Quick Sort | O(n log n) | O(n log n) | O(n²) |
+| Quick Sort | O(n log n) | O(n log n) | O(nÂ²) |
 
 ### Searching Algorithms
 
@@ -69,13 +69,13 @@ The project is designed as a lightweight frontend application built with **HTML,
 |---|---:|---:|---:|
 | Linear Search | O(1) | O(n) | O(n) |
 | Binary Search | O(1) | O(log n) | O(log n) |
-| Jump Search | O(1) | O(√n) | O(√n) |
+| Jump Search | O(1) | O(âˆšn) | O(âˆšn) |
 | Interpolation Search | O(1) | O(log log n)* | O(n) |
 | Exponential Search | O(1) | O(log n) | O(log n) |
 
 \*Interpolation Search's average complexity assumes suitably distributed, sorted data. Binary, Jump, Interpolation, and Exponential Search require sorted input.
 
-## 🛠️ Technology Stack
+## ðŸ› ï¸ Technology Stack
 
 | Technology | Purpose |
 |---|---|
@@ -84,11 +84,11 @@ The project is designed as a lightweight frontend application built with **HTML,
 | Vanilla JavaScript | Algorithm execution, visualization state, and controls |
 | Git & GitHub | Version control and team collaboration |
 
-**Architecture:** Browser → HTML interface → CSS presentation → JavaScript algorithm and visualization logic.
+**Architecture:** Browser â†’ HTML interface â†’ CSS presentation â†’ JavaScript algorithm and visualization logic.
 
 No Python runtime, API server, database, or backend service is required for this frontend-only version.
 
-## 🖥️ Getting Started
+## ðŸ–¥ï¸ Getting Started
 
 ### Prerequisites
 
@@ -111,34 +111,34 @@ If the entry point is `index.html`, open it directly in your browser, or use the
 
 No dependency installation is required for a pure HTML/CSS/JavaScript implementation unless additional libraries are introduced later.
 
-## 📁 Suggested Project Structure
+## ðŸ“ Suggested Project Structure
 
 ```text
 AlgoVision/
-├── index.html
-├── README.md
-├── assets/
-│   ├── icons/
-│   └── images/
-├── css/
-│   ├── style.css
-│   ├── layout.css
-│   └── responsive.css
-├── js/
-│   ├── app.js
-│   ├── algorithms/
-│   │   ├── sorting.js
-│   │   └── searching.js
-│   ├── visualizer.js
-│   ├── controls.js
-│   └── statistics.js
-└── docs/
-    └── screenshots/
+â”œâ”€â”€ index.html
+â”œâ”€â”€ README.md
+â”œâ”€â”€ assets/
+â”‚   â”œâ”€â”€ icons/
+â”‚   â””â”€â”€ images/
+â”œâ”€â”€ css/
+â”‚   â”œâ”€â”€ style.css
+â”‚   â”œâ”€â”€ layout.css
+â”‚   â””â”€â”€ responsive.css
+â”œâ”€â”€ js/
+â”‚   â”œâ”€â”€ app.js
+â”‚   â”œâ”€â”€ algorithms/
+â”‚   â”‚   â”œâ”€â”€ sorting.js
+â”‚   â”‚   â””â”€â”€ searching.js
+â”‚   â”œâ”€â”€ visualizer.js
+â”‚   â”œâ”€â”€ controls.js
+â”‚   â””â”€â”€ statistics.js
+â””â”€â”€ docs/
+    â””â”€â”€ screenshots/
 ```
 
 This is a suggested structure. Adjust the paths to match the actual repository files.
 
-## 🎮 Intended User Workflow
+## ðŸŽ® Intended User Workflow
 
 1. Open AlgoVision in a browser.
 2. Select a sorting or searching algorithm.
@@ -149,7 +149,7 @@ This is a suggested structure. Adjust the paths to match the actual repository f
 7. Review the corresponding code and complexity information.
 8. Reset the visualization and experiment with a different input.
 
-## 👥 Team Collaboration
+## ðŸ‘¥ Team Collaboration
 
 AlgoVision is designed for collaborative development with clearly separated responsibilities.
 
@@ -169,7 +169,7 @@ AlgoVision is designed for collaborative development with clearly separated resp
 - Test each feature before integration.
 - Coordinate shared interfaces and data formats before implementation.
 
-## 🗺️ Development Roadmap
+## ðŸ—ºï¸ Development Roadmap
 
 - [ ] Establish the responsive application layout.
 - [ ] Implement the algorithm selection interface.
@@ -184,7 +184,7 @@ AlgoVision is designed for collaborative development with clearly separated resp
 
 Update these checkboxes as the features are implemented and verified.
 
-## 🧪 Testing Checklist
+## ðŸ§ª Testing Checklist
 
 - [ ] Empty input is handled safely.
 - [ ] Duplicate and negative values work correctly where applicable.
@@ -196,7 +196,7 @@ Update these checkboxes as the features are implemented and verified.
 - [ ] Layout remains usable on smaller screens.
 - [ ] Browser console has no unexpected errors.
 
-## 🌱 Future Enhancements
+## ðŸŒ± Future Enhancements
 
 - Side-by-side algorithm comparisons.
 - Speed controls for animation playback.
@@ -207,7 +207,7 @@ Update these checkboxes as the features are implemented and verified.
 
 These are possible extensions, not claims about currently implemented features.
 
-## 🤝 Contributing
+## ðŸ¤ Contributing
 
 Contributions from the project team are welcome.
 
@@ -220,16 +220,24 @@ Contributions from the project team are welcome.
 
 Keep changes focused and avoid modifying another member's work without coordination.
 
-## 📄 License
+## ðŸ“„ License
 
 A license has not yet been specified. Add a `LICENSE` file after the project owner selects the intended license.
 
 ---
 
 <p align="center">
-  <strong>AlgoVision — Learn the Logic. See the Execution. Understand the Algorithm.</strong>
+  <strong>AlgoVision â€” Learn the Logic. See the Execution. Understand the Algorithm.</strong>
 </p>
 
 <p align="center">
   Built as a collaborative learning project.
 </p>
+
+<!-- VERCEL_DEPLOYMENT_START -->
+## Live Demo
+
+**[🚀 Open AlgoVision](https://front-kf6gxgcah-khaleelxrahmans-projects.vercel.app)**
+
+Deployed on Vercel.
+<!-- VERCEL_DEPLOYMENT_END -->
