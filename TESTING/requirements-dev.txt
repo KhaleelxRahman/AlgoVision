@@ -1,0 +1,2 @@
+# Test-only dependency. The learning module itself has no third-party dependencies.
+pytest>=7.0
